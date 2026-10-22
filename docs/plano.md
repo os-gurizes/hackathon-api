@@ -13,17 +13,17 @@ API em TypeScript que serve os dados calculados pelo ETL (Batch 1) e gerencia co
 
 ## 1. Stack
 
-| Camada | Escolha |
-|---|---|
-| Runtime | Node.js 22 LTS |
-| Framework | Fastify 5 |
-| Validação e tipos | TypeBox com `@fastify/type-provider-typebox`. O schema é a fonte única de validação, tipagem e OpenAPI |
-| Banco | Postgres 16 |
-| ORM e query builder | Drizzle ORM |
-| Auth | `@fastify/jwt` com cookie httpOnly, `@fastify/cookie` e senhas com `argon2` |
-| Documentação | `@fastify/swagger` com `@fastify/swagger-ui` |
-| Testes | Vitest com `fastify.inject` e Postgres de teste via Docker |
-| Execução local | `tsx` em dev e `tsc` para build |
+| Camada              | Escolha                                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------ |
+| Runtime             | Node.js 22 LTS                                                                                         |
+| Framework           | Fastify 5                                                                                              |
+| Validação e tipos   | TypeBox com `@fastify/type-provider-typebox`. O schema é a fonte única de validação, tipagem e OpenAPI |
+| Banco               | Postgres 16                                                                                            |
+| ORM e query builder | Drizzle ORM                                                                                            |
+| Auth                | `@fastify/jwt` com cookie httpOnly, `@fastify/cookie` e senhas com `argon2`                            |
+| Documentação        | `@fastify/swagger` com `@fastify/swagger-ui`                                                           |
+| Testes              | Vitest com `fastify.inject` e Postgres de teste via Docker                                             |
+| Execução local      | `tsx` em dev e `tsc` para build                                                                        |
 
 ## 2. Estrutura
 
@@ -104,80 +104,90 @@ Formato único: `{ "error": { "code": "NOT_FOUND", "message": "..." } }`. Códig
 ## 5. Endpoints
 
 ### Auth
-| Método | Rota | Papel |
-|---|---|---|
-| POST | `/auth/login` | público |
-| POST | `/auth/refresh` | público, com cookie |
-| POST | `/auth/logout` | autenticado |
-| GET | `/me` | autenticado; devolve o papel, o jogador vinculado e o time |
-| GET, POST, PATCH | `/admin/users` | admin |
+
+| Método           | Rota            | Papel                                                      |
+| ---------------- | --------------- | ---------------------------------------------------------- |
+| POST             | `/auth/login`   | público                                                    |
+| POST             | `/auth/refresh` | público, com cookie                                        |
+| POST             | `/auth/logout`  | autenticado                                                |
+| GET              | `/me`           | autenticado; devolve o papel, o jogador vinculado e o time |
+| GET, POST, PATCH | `/admin/users`  | admin                                                      |
 
 ### Catálogo
-| Rota | Conteúdo |
-|---|---|
-| `GET /tournaments` | campeonatos com etapas |
-| `GET /tournaments/:id/standings` | classificação por etapa |
-| `GET /series/:id` | série com os mapas |
-| `GET /maps` | mapas com a silhueta em SVG, os sites e os polígonos das zonas |
-| `GET /agents` | agentes com função e nomes das habilidades |
-| `GET /weapons` | armas com categoria e custo |
+
+| Rota                             | Conteúdo                                                       |
+| -------------------------------- | -------------------------------------------------------------- |
+| `GET /tournaments`               | campeonatos com etapas                                         |
+| `GET /tournaments/:id/standings` | classificação por etapa                                        |
+| `GET /series/:id`                | série com os mapas                                             |
+| `GET /maps`                      | mapas com a silhueta em SVG, os sites e os polígonos das zonas |
+| `GET /agents`                    | agentes com função e nomes das habilidades                     |
+| `GET /weapons`                   | armas com categoria e custo                                    |
 
 ### Partidas (visão geral e visão do coach)
-| Rota | Conteúdo |
-|---|---|
-| `GET /matches` | lista paginada e filtrável |
-| `GET /matches/:id` | placar, times e scoreboard |
-| `GET /matches/:id/rounds` | timeline: vencedor, tipo de fim, compra, plant e curva de WP |
+
+| Rota                                | Conteúdo                                                                                               |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `GET /matches`                      | lista paginada e filtrável                                                                             |
+| `GET /matches/:id`                  | placar, times e scoreboard                                                                             |
+| `GET /matches/:id/rounds`           | timeline: vencedor, tipo de fim, compra, plant e curva de WP                                           |
 | `GET /matches/:id/rounds/:n/replay` | os snapshots de posição do round, em ordem de tempo, com kills. Alimenta o replay 2D da visão de coach |
 
 ### Jogadores
-| Rota | Conteúdo |
-|---|---|
-| `GET /players` | ranking com ordenação por `acs`, `kd`, `adr`, `kast`, `hs`, `fk` |
-| `GET /players/:id` | perfil e totais |
-| `GET /players/:id/stats` | estatísticas por mapa, agente e lado, e K/D médio por partida |
-| `GET /players/:id/matches` | histórico |
-| `GET /players/:id/agents` | desempenho por agente |
-| `GET /players/:id/weapons` | desempenho por arma e faixa de distância |
-| `GET /players/:id/patterns` | comportamentos repetitivos com impacto |
-| `GET /players/:id/pressure` | desempenho por contexto de pressão |
-| `GET /players/:id/abilities` | proxies de habilidade (`isEstimate`) |
+
+| Rota                         | Conteúdo                                                         |
+| ---------------------------- | ---------------------------------------------------------------- |
+| `GET /players`               | ranking com ordenação por `acs`, `kd`, `adr`, `kast`, `hs`, `fk` |
+| `GET /players/:id`           | perfil e totais                                                  |
+| `GET /players/:id/stats`     | estatísticas por mapa, agente e lado, e K/D médio por partida    |
+| `GET /players/:id/matches`   | histórico                                                        |
+| `GET /players/:id/agents`    | desempenho por agente                                            |
+| `GET /players/:id/weapons`   | desempenho por arma e faixa de distância                         |
+| `GET /players/:id/patterns`  | comportamentos repetitivos com impacto                           |
+| `GET /players/:id/pressure`  | desempenho por contexto de pressão                               |
+| `GET /players/:id/abilities` | proxies de habilidade (`isEstimate`)                             |
 
 ### Times
-| Rota | Conteúdo |
-|---|---|
-| `GET /teams` e `GET /teams/:id` | perfil, elenco por campeonato e win rate por mapa |
-| `GET /teams/:id/economy` | economia média, matriz de vitória por compra e flags prejudiciais |
-| `GET /teams/:id/strategies` | clusters do ETL, os de maior e menor sucesso, por mapa e lado |
-| `GET /teams/:id/rotations` | rotações e rotações sem informação, com o custo |
-| `GET /teams/:id/combos` | combos de habilidade entre aliados (`isEstimate`) |
-| `GET /teams/:id/pressure` | tendências sob pressão |
+
+| Rota                            | Conteúdo                                                          |
+| ------------------------------- | ----------------------------------------------------------------- |
+| `GET /teams` e `GET /teams/:id` | perfil, elenco por campeonato e win rate por mapa                 |
+| `GET /teams/:id/economy`        | economia média, matriz de vitória por compra e flags prejudiciais |
+| `GET /teams/:id/strategies`     | clusters do ETL, os de maior e menor sucesso, por mapa e lado     |
+| `GET /teams/:id/rotations`      | rotações e rotações sem informação, com o custo                   |
+| `GET /teams/:id/combos`         | combos de habilidade entre aliados (`isEstimate`)                 |
+| `GET /teams/:id/pressure`       | tendências sob pressão                                            |
 
 ### Mapas e heatmap
-| Rota | Conteúdo |
-|---|---|
+
+| Rota                                                                                                                  | Conteúdo                                                                                    |
+| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | `GET /maps/:id/heatmap?metric=presence\|kills\|deaths\|kd\|first_kills&resolution=cells\|zones` com os filtros comuns | células esparsas `[{ x, y, value, sampleSize }]` ou zonas `[{ zoneId, value, sampleSize }]` |
-| `GET /maps/:id/stats` | pick rate de agentes, win rate por lado e sites mais plantados |
+| `GET /maps/:id/stats`                                                                                                 | pick rate de agentes, win rate por lado e sites mais plantados                              |
 
 ### Armas e agentes (o padrão)
-| Rota | Conteúdo |
-|---|---|
+
+| Rota                 | Conteúdo                                                                          |
+| -------------------- | --------------------------------------------------------------------------------- |
 | `GET /weapons/stats` | mais usadas e melhor desempenho (kills por round, HS%, win rate e custo por kill) |
-| `GET /agents/stats` | agentes com melhor desempenho (média bayesiana), por mapa |
+| `GET /agents/stats`  | agentes com melhor desempenho (média bayesiana), por mapa                         |
 
 ### Insights
-| Rota | Conteúdo |
-|---|---|
+
+| Rota                                               | Conteúdo                                                            |
+| -------------------------------------------------- | ------------------------------------------------------------------- |
 | `GET /insights?scope=player\|team&id=...&kind=...` | cartões de insight ordenados por severidade, com `evidenceRoundIds` |
 
 ### Playbook do coach (escrita)
-| Método | Rota |
-|---|---|
-| GET | `/teams/:id/playbook?map=` |
-| POST | `/teams/:id/playbook` |
-| GET, PUT, DELETE | `/playbook/:strategyId` |
+
+| Método           | Rota                       |
+| ---------------- | -------------------------- |
+| GET              | `/teams/:id/playbook?map=` |
+| POST             | `/teams/:id/playbook`      |
+| GET, PUT, DELETE | `/playbook/:strategyId`    |
 
 Payload da estratégia:
+
 ```ts
 type PlaybookStrategy = {
   id: StrategyId
@@ -208,6 +218,7 @@ type Shape =
 
 type Point = { x: number; y: number }
 ```
+
 As coordenadas ficam no espaço normalizado 0..1 do mapa, o mesmo do ETL, para que os desenhos se sobreponham ao heatmap e ao replay. O conteúdo é salvo em `jsonb` e validado por um schema TypeBox na entrada. Limites: no máximo 2.000 shapes e 256 KB por estratégia.
 
 ## 6. Desempenho
@@ -231,16 +242,16 @@ As coordenadas ficam no espaço normalizado 0..1 do mapa, o mesmo do ETL, para q
 
 ## 8. Entregáveis e critérios de aceite
 
-| # | Entrega | Aceite |
-|---|---|---|
-| 1 | Base: Fastify, config, Drizzle, erros e OpenAPI | `GET /health` funcionando e Swagger acessível |
-| 2 | Auth e papéis com seed | testes de acesso por papel passando |
-| 3 | Catálogo e partidas | o replay de um round retorna os snapshots ordenados |
-| 4 | Jogadores, times, armas e agentes | os números batem com as tabelas do ETL |
-| 5 | Heatmap e mapas | células e zonas com todos os filtros |
-| 6 | Economia, estratégias, pressão, combos e insights | o payload traz `isEstimate`, `sampleSize` e `confidence` |
-| 7 | Playbook do coach | CRUD completo com validação e limites |
-| 8 | Desempenho | p95 abaixo de 150 ms |
+| #   | Entrega                                           | Aceite                                                   |
+| --- | ------------------------------------------------- | -------------------------------------------------------- |
+| 1   | Base: Fastify, config, Drizzle, erros e OpenAPI   | `GET /health` funcionando e Swagger acessível            |
+| 2   | Auth e papéis com seed                            | testes de acesso por papel passando                      |
+| 3   | Catálogo e partidas                               | o replay de um round retorna os snapshots ordenados      |
+| 4   | Jogadores, times, armas e agentes                 | os números batem com as tabelas do ETL                   |
+| 5   | Heatmap e mapas                                   | células e zonas com todos os filtros                     |
+| 6   | Economia, estratégias, pressão, combos e insights | o payload traz `isEstimate`, `sampleSize` e `confidence` |
+| 7   | Playbook do coach                                 | CRUD completo com validação e limites                    |
+| 8   | Desempenho                                        | p95 abaixo de 150 ms                                     |
 
 ## 9. Dependências
 

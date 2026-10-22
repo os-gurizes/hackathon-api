@@ -6,7 +6,7 @@ import { Rate } from './schema.js'
 export const StatLine = Type.Object({
   matches: Type.Integer(),
   rounds: Type.Integer(),
-  winRate: Rate,
+  roundWinRate: Rate,
   acs: Type.Number(),
   kd: Type.Number(),
   kills: Type.Integer(),
@@ -52,6 +52,25 @@ export const STAT_COLUMNS = sql`
   sum(s.clutch_wins)::int AS clutch_wins, sum(s.clutch_attempts)::int AS clutch_attempts,
   sum(s.multikills_2 + s.multikills_3 + s.multikills_4 + s.multikills_5)::int AS multikills`
 
+export const EMPTY_STATS: StatRow = {
+  matches: 0,
+  rounds: 0,
+  rounds_won: 0,
+  score: 0,
+  kills: 0,
+  deaths: 0,
+  assists: 0,
+  damage: 0,
+  headshots: 0,
+  shots: 0,
+  kast_rounds: 0,
+  first_kills: 0,
+  first_deaths: 0,
+  clutch_wins: 0,
+  clutch_attempts: 0,
+  multikills: 0,
+}
+
 export const fixed = (value: number, digits: number): number => Number(value.toFixed(digits))
 const ratio = (part: number, total: number, digits = 3) => (total === 0 ? 0 : fixed(part / total, digits))
 
@@ -59,7 +78,7 @@ export function toStatLine(row: StatRow): StatLine {
   return {
     matches: row.matches,
     rounds: row.rounds,
-    winRate: ratio(row.rounds_won, row.rounds),
+    roundWinRate: ratio(row.rounds_won, row.rounds),
     acs: ratio(row.score, row.rounds, 1),
     kd: fixed(row.kills / Math.max(row.deaths, 1), 2),
     kills: row.kills,

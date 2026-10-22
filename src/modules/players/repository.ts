@@ -4,7 +4,14 @@ import type { Database } from '../../db/client.js'
 import { decodeCursor, encodeCursor } from '../../shared/cursor.js'
 import { filterConditions, type Filters } from '../../shared/filters.js'
 import { one, rows, where } from '../../shared/sql.js'
-import { fixed, SORT_EXPRESSIONS, STAT_COLUMNS, toStatLine, type StatRow } from '../../shared/stats.js'
+import {
+  EMPTY_STATS,
+  fixed,
+  SORT_EXPRESSIONS,
+  STAT_COLUMNS,
+  toStatLine,
+  type StatRow,
+} from '../../shared/stats.js'
 import { distance, rate, WEAPON_COLUMNS, weaponFilters, type WeaponRow } from '../stats/weapons.js'
 import type {
   PlayerAgent,
@@ -112,7 +119,7 @@ export async function profile(db: Database, id: number): Promise<PlayerProfile |
       matches: t.matches,
       lastPlayedOn: t.last_played_on,
     })),
-    totals: toStatLine(totals),
+    totals: toStatLine(totals.matches > 0 ? totals : EMPTY_STATS),
     topAgents: agents.map((a) => ({ agent: { id: a.id, name: a.name, role: a.role }, matches: a.matches })),
   }
 }
@@ -156,26 +163,8 @@ export async function playerStats(db: Database, id: number, filters: PlayerFilte
           WHERE ${base} GROUP BY s.match_id, m.played_on, m.started_at ORDER BY m.started_at`,
     ),
   ])
-  const empty: StatRow = {
-    matches: 0,
-    rounds: 0,
-    rounds_won: 0,
-    score: 0,
-    kills: 0,
-    deaths: 0,
-    assists: 0,
-    damage: 0,
-    headshots: 0,
-    shots: 0,
-    kast_rounds: 0,
-    first_kills: 0,
-    first_deaths: 0,
-    clutch_wins: 0,
-    clutch_attempts: 0,
-    multikills: 0,
-  }
   return {
-    overall: toStatLine(overall && overall.matches > 0 ? overall : empty),
+    overall: toStatLine(overall && overall.matches > 0 ? overall : EMPTY_STATS),
     byMap: byMap.map((r) => ({ map: { id: r.map_id, slug: r.slug, name: r.name }, stats: toStatLine(r) })),
     byAgent: byAgent.map((r) => ({
       agent: { id: r.agent_id, name: r.agent_name, role: r.agent_role },
@@ -230,8 +219,13 @@ export async function playerMatches(
                CASE WHEN mp.team_id = m.red_team_id THEN m.blue_score ELSE m.red_score END::int AS opp_score,
                m.winner_team_id = mp.team_id AS won,
                a.id AS agent_id, a.name AS agent_name, a.role AS agent_role,
-               mp.score, mp.rounds_played AS rounds, mp.kills, mp.deaths, mp.assists
+               st.score, st.rounds, st.kills, st.deaths, st.assists
         FROM analytics.match_players mp
+        JOIN (
+          SELECT match_id, player_id, sum(score)::int AS score, sum(rounds)::int AS rounds,
+                 sum(kills)::int AS kills, sum(deaths)::int AS deaths, sum(assists)::int AS assists
+          FROM analytics.player_match_stats WHERE player_id = ${id} GROUP BY match_id, player_id
+        ) st ON st.match_id = mp.match_id AND st.player_id = mp.player_id
         JOIN analytics.matches m ON m.id = mp.match_id
         JOIN analytics.maps map ON map.id = m.map_id
         JOIN analytics.teams t ON t.id = mp.team_id
@@ -278,13 +272,18 @@ export async function playerAgents(db: Database, id: number, filters: PlayerFilt
     StatRow & { agent_id: number; agent_name: string; agent_role: string | null; baseline: number | null }
   >(
     db,
-    sql`SELECT a.id AS agent_id, a.name AS agent_name, a.role AS agent_role, ${STAT_COLUMNS},
-               sum(s.rounds * ams.acs)::float8 / nullif(sum(s.rounds) FILTER (WHERE ams.acs IS NOT NULL), 0) AS baseline
+    sql`WITH others AS (
+          SELECT s.agent_id, sum(s.score)::float8 / nullif(sum(s.rounds), 0) AS acs
+          FROM analytics.player_match_stats s
+          WHERE ${where([...statFilters(filters), sql`s.player_id <> ${id}`])}
+          GROUP BY s.agent_id
+        )
+        SELECT a.id AS agent_id, a.name AS agent_name, a.role AS agent_role, ${STAT_COLUMNS}, o.acs AS baseline
         FROM analytics.player_match_stats s
         JOIN analytics.agents a ON a.id = s.agent_id
-        LEFT JOIN analytics.agent_map_stats ams ON ams.map_id = s.map_id AND ams.agent_id = s.agent_id
+        LEFT JOIN others o ON o.agent_id = s.agent_id
         WHERE ${where(statFilters({ ...filters, player: id }))}
-        GROUP BY a.id ORDER BY sum(s.rounds) DESC`,
+        GROUP BY a.id, o.acs ORDER BY sum(s.rounds) DESC`,
   )
   return data.map((r) => ({
     agent: { id: r.agent_id, name: r.agent_name, role: r.agent_role },
@@ -309,7 +308,7 @@ export async function playerWeapons(
     rows<WeaponRow>(
       db,
       sql`SELECT ${WEAPON_COLUMNS} FROM analytics.weapon_stats s JOIN analytics.weapons w ON w.id = s.weapon_id
-          WHERE ${where(weaponFilters(filters))} AND NOT w.is_armor GROUP BY w.id`,
+          WHERE ${where(weaponFilters(filters))} AND s.player_id <> ${id} AND NOT w.is_armor GROUP BY w.id`,
     ),
   ])
   const baseline = new Map(everyone.map((w) => [w.weapon_id, w]))

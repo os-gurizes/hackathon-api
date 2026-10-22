@@ -38,7 +38,7 @@ export async function createUser(
   await app.db
     .insert(users)
     .values({
-      email: user.email,
+      email: user.email.toLowerCase(),
       role: user.role,
       playerId: user.playerId ?? null,
       teamId: user.teamId ?? null,

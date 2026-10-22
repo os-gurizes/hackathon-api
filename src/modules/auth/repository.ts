@@ -64,22 +64,45 @@ export async function saveRefreshToken(
   await db.insert(refreshTokens).values({ userId, tokenHash, expiresAt })
 }
 
+export const REUSE_GRACE_MS = 10_000
+
+export async function revokeAllRefreshTokens(db: Database, userId: UserId): Promise<void> {
+  await db
+    .update(refreshTokens)
+    .set({ revokedAt: new Date() })
+    .where(and(eq(refreshTokens.userId, userId), isNull(refreshTokens.revokedAt)))
+}
+
 export async function consumeRefreshToken(
   db: Database,
   tokenHash: string,
 ): Promise<{ userId: UserId; role: Role } | undefined> {
+  const now = new Date()
   const [row] = await db
     .update(refreshTokens)
-    .set({ revokedAt: new Date() })
+    .set({ revokedAt: now })
     .where(
       and(
         eq(refreshTokens.tokenHash, tokenHash),
         isNull(refreshTokens.revokedAt),
-        gt(refreshTokens.expiresAt, new Date()),
+        gt(refreshTokens.expiresAt, now),
       ),
     )
     .returning({ userId: refreshTokens.userId })
-  if (!row) return undefined
+  if (!row) {
+    const [used] = await db
+      .select({
+        userId: refreshTokens.userId,
+        revokedAt: refreshTokens.revokedAt,
+        expiresAt: refreshTokens.expiresAt,
+      })
+      .from(refreshTokens)
+      .where(eq(refreshTokens.tokenHash, tokenHash))
+    const reused =
+      used?.revokedAt && used.expiresAt > now && now.getTime() - used.revokedAt.getTime() > REUSE_GRACE_MS
+    if (used && reused) await revokeAllRefreshTokens(db, used.userId as UserId)
+    return undefined
+  }
   const [user] = await db.select({ role: users.role }).from(users).where(eq(users.id, row.userId))
   return user && { userId: row.userId as UserId, role: user.role }
 }

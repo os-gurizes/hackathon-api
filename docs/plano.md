@@ -224,7 +224,7 @@ As coordenadas ficam no espaço normalizado 0..1 do mapa, o mesmo do ETL, para q
 ## 6. Desempenho
 
 - Índices nas colunas de filtro de todas as tabelas derivadas. A criação fica no ETL, e a API documenta as queries que precisam deles.
-- Cache em memória (LRU) para catálogo e heatmaps, invalidado quando `pipeline_version` muda.
+- Sem cache em memória: as checagens de acesso rodam dentro dos handlers, e um cache antes deles poderia entregar dado a quem não tem permissão. Como as rotas já respondem em poucos ms, ficou só o cache HTTP (ETag e 304).
 - `ETag` nas respostas de leitura analítica.
 - Paginação por cursor em `/matches` e `/players`.
 - Meta: p95 abaixo de 150 ms nos endpoints analíticos, medido com `autocannon` sobre o dataset completo.

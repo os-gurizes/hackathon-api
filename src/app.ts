@@ -8,7 +8,7 @@ import Fastify, { type FastifyError, type FastifyInstance } from 'fastify'
 import type { Config } from './config.js'
 import type { Database } from './db/client.js'
 import { healthRoutes } from './modules/health/routes.js'
-import { AppError, errorBody } from './shared/errors.js'
+import { AppError, codeForStatus, errorBody } from './shared/errors.js'
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -52,7 +52,7 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
       return reply.status(400).send(errorBody('VALIDATION', error.message))
     }
     if (typeof error.statusCode === 'number' && error.statusCode < 500) {
-      return reply.status(error.statusCode).send(errorBody('VALIDATION', error.message))
+      return reply.status(error.statusCode).send(errorBody(codeForStatus(error.statusCode), error.message))
     }
     request.log.error(error)
     return reply.status(500).send(errorBody('INTERNAL', 'Erro interno'))

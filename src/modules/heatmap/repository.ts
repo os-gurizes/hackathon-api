@@ -60,7 +60,9 @@ export async function heatmap(db: Database, mapId: number, query: HeatmapQuery):
     db,
     sql`SELECT sum(h.kills)::int AS kills, sum(h.deaths)::int AS deaths FROM analytics.heatmap_cells h WHERE ${filter}`,
   )
-  const mapKd = (totals?.kills ?? 0) / Math.max(totals?.deaths ?? 0, 1) || 1
+  const kills = totals?.kills ?? 0
+  const deaths = totals?.deaths ?? 0
+  const mapKd = kills === 0 && deaths === 0 ? 1 : kills / Math.max(deaths, 1)
   const relevant = (c: Counts) =>
     query.metric === 'kd' ? c.kills + c.deaths > 0 : metricValue(query.metric, c, mapKd).sampleSize > 0
 
@@ -122,17 +124,32 @@ export async function mapStats(db: Database, mapId: number, query: MapStatsQuery
                    JOIN analytics.matches m ON m.id = r.match_id
                    JOIN analytics.series s ON s.id = m.series_id
                    WHERE ${matchFilter}`
+  const team = query.team
+  const attacking = team === undefined ? sql`TRUE` : sql`r.attack_team_id = ${team}`
+  const defending = team === undefined ? sql`TRUE` : sql`r.defense_team_id = ${team}`
   const [summary, sites, agents] = await Promise.all([
-    one<{ matches: number; rounds: number; attack_won: number }>(
+    one<{
+      matches: number
+      rounds: number
+      attack_rounds: number
+      attack_won: number
+      defense_rounds: number
+      defense_won: number
+    }>(
       db,
       sql`SELECT count(DISTINCT m.id)::int AS matches, count(*)::int AS rounds,
-                 count(*) FILTER (WHERE r.winner_side = 'attack')::int AS attack_won ${base}`,
+                 count(*) FILTER (WHERE ${attacking})::int AS attack_rounds,
+                 count(*) FILTER (WHERE ${attacking} AND r.winner_side = 'attack')::int AS attack_won,
+                 count(*) FILTER (WHERE ${defending})::int AS defense_rounds,
+                 count(*) FILTER (WHERE ${defending} AND r.winner_side = 'defense')::int AS defense_won
+          ${base}`,
     ),
     rows<{ site: string; plants: number; attack_won: number }>(
       db,
       sql`SELECT r.plant_site AS site, count(*)::int AS plants,
                  count(*) FILTER (WHERE r.winner_side = 'attack')::int AS attack_won
-          ${base} AND r.plant_site IS NOT NULL GROUP BY r.plant_site ORDER BY r.plant_site`,
+          ${base} AND r.plant_site IS NOT NULL AND ${attacking}
+          GROUP BY r.plant_site ORDER BY r.plant_site`,
     ),
     rows<{ id: number; name: string; role: string | null; picks: number; won: number }>(
       db,
@@ -148,7 +165,6 @@ export async function mapStats(db: Database, mapId: number, query: MapStatsQuery
   ])
   const matches = summary?.matches ?? 0
   const rounds = summary?.rounds ?? 0
-  const attackWon = summary?.attack_won ?? 0
   const totalPlants = sites.reduce((n, s) => n + s.plants, 0)
   const slots = query.team === undefined ? matches * 2 : matches
   const rate = (part: number, total: number) => (total === 0 ? 0 : fixed(part / total, 3))
@@ -157,8 +173,8 @@ export async function mapStats(db: Database, mapId: number, query: MapStatsQuery
     matches,
     rounds,
     sides: [
-      { side: 'attack', roundWinRate: rate(attackWon, rounds) },
-      { side: 'defense', roundWinRate: rate(rounds - attackWon, rounds) },
+      { side: 'attack', roundWinRate: rate(summary?.attack_won ?? 0, summary?.attack_rounds ?? 0) },
+      { side: 'defense', roundWinRate: rate(summary?.defense_won ?? 0, summary?.defense_rounds ?? 0) },
     ],
     sites: sites.map((s) => ({
       site: s.site,

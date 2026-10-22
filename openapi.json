@@ -977,8 +977,7 @@
                     "minimum": 1,
                     "nullable": true
                   }
-                },
-                "minProperties": 1
+                }
               }
             }
           }
@@ -3637,7 +3636,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -3659,7 +3658,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -3892,7 +3891,7 @@
                       "required": [
                         "matches",
                         "rounds",
-                        "winRate",
+                        "roundWinRate",
                         "acs",
                         "kd",
                         "kills",
@@ -3914,7 +3913,7 @@
                         "rounds": {
                           "type": "integer"
                         },
-                        "winRate": {
+                        "roundWinRate": {
                           "type": "number",
                           "minimum": 0,
                           "maximum": 1
@@ -4181,7 +4180,7 @@
                       "required": [
                         "matches",
                         "rounds",
-                        "winRate",
+                        "roundWinRate",
                         "acs",
                         "kd",
                         "kills",
@@ -4203,7 +4202,7 @@
                         "rounds": {
                           "type": "integer"
                         },
-                        "winRate": {
+                        "roundWinRate": {
                           "type": "number",
                           "minimum": 0,
                           "maximum": 1
@@ -4286,7 +4285,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4308,7 +4307,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -4395,7 +4394,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4417,7 +4416,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -4500,7 +4499,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4522,7 +4521,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -5094,7 +5093,7 @@
                         "required": [
                           "matches",
                           "rounds",
-                          "winRate",
+                          "roundWinRate",
                           "acs",
                           "kd",
                           "kills",
@@ -5116,7 +5115,7 @@
                           "rounds": {
                             "type": "integer"
                           },
-                          "winRate": {
+                          "roundWinRate": {
                             "type": "number",
                             "minimum": 0,
                             "maximum": 1
@@ -6799,6 +6798,73 @@
                             "minimum": 0,
                             "maximum": 1
                           }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
                         }
                       }
                     }
@@ -8560,7 +8626,7 @@
                     "type": "object",
                     "required": [
                       "context",
-                      "rounds",
+                      "playerRounds",
                       "winRate",
                       "survivalRate",
                       "kd",
@@ -8571,7 +8637,7 @@
                       "context": {
                         "type": "string"
                       },
-                      "rounds": {
+                      "playerRounds": {
                         "type": "integer"
                       },
                       "winRate": {
@@ -8762,24 +8828,6 @@
           "player analysis"
         ],
         "parameters": [
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "in": "query",
-            "name": "tournament",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "in": "query",
-            "name": "stage",
-            "required": false
-          },
           {
             "schema": {
               "type": "integer",
@@ -9207,7 +9255,7 @@
                     "type": "object",
                     "required": [
                       "context",
-                      "rounds",
+                      "playerRounds",
                       "winRate",
                       "survivalRate",
                       "kd",
@@ -9218,7 +9266,7 @@
                       "context": {
                         "type": "string"
                       },
-                      "rounds": {
+                      "playerRounds": {
                         "type": "integer"
                       },
                       "winRate": {
@@ -9434,27 +9482,6 @@
             },
             "in": "query",
             "name": "map",
-            "required": false
-          },
-          {
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "enum": [
-                    "attack"
-                  ]
-                },
-                {
-                  "type": "string",
-                  "enum": [
-                    "defense"
-                  ]
-                }
-              ]
-            },
-            "in": "query",
-            "name": "side",
             "required": false
           },
           {

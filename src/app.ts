@@ -12,6 +12,9 @@ import { authRoutes } from './modules/auth/routes.js'
 import { catalogRoutes } from './modules/catalog/routes.js'
 import { healthRoutes } from './modules/health/routes.js'
 import { matchRoutes } from './modules/matches/routes.js'
+import { playerRoutes } from './modules/players/routes.js'
+import { statsRoutes } from './modules/stats/routes.js'
+import { teamRoutes } from './modules/teams/routes.js'
 import { authPlugin } from './plugins/auth.js'
 import { AppError, errorBody } from './shared/errors.js'
 
@@ -75,6 +78,9 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
     data.addHook('onRequest', app.authenticate)
     await data.register(catalogRoutes)
     await data.register(matchRoutes)
+    await data.register(playerRoutes)
+    await data.register(teamRoutes)
+    await data.register(statsRoutes)
   })
 
   return app

@@ -40,9 +40,19 @@ export const heatmapRoutes: FastifyPluginAsyncTypebox = async (app) => {
 
   app.get(
     '/maps/:id/stats',
-    { schema: { ...common, querystring: MapStatsQuery, response: { 200: MapStats, 404: ErrorResponse } } },
+    {
+      schema: {
+        ...common,
+        querystring: MapStatsQuery,
+        response: { 200: MapStats, 403: ErrorResponse, 404: ErrorResponse },
+      },
+    },
     async (request) => {
       await ensureMap(request.params.id)
+      if (request.query.team !== undefined) {
+        const viewer = await loadViewer(app.db, request.user)
+        await assert(canViewTeamAnalytics(app.db, viewer, request.query.team))
+      }
       return mapStats(app.db, request.params.id, request.query)
     },
   )

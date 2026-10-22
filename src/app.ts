@@ -9,7 +9,9 @@ import type { Config } from './config.js'
 import type { Database } from './db/client.js'
 import { adminRoutes } from './modules/admin/routes.js'
 import { authRoutes } from './modules/auth/routes.js'
+import { catalogRoutes } from './modules/catalog/routes.js'
 import { healthRoutes } from './modules/health/routes.js'
+import { matchRoutes } from './modules/matches/routes.js'
 import { authPlugin } from './plugins/auth.js'
 import { AppError, errorBody } from './shared/errors.js'
 
@@ -69,6 +71,11 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
   await app.register(healthRoutes)
   await app.register(authRoutes)
   await app.register(adminRoutes)
+  await app.register(async (data) => {
+    data.addHook('onRequest', app.authenticate)
+    await data.register(catalogRoutes)
+    await data.register(matchRoutes)
+  })
 
   return app
 }

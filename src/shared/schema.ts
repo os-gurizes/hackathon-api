@@ -2,7 +2,20 @@ import { Type, type TSchema } from 'typebox'
 
 export const Nullable = <T extends TSchema>(schema: T) => Type.Union([schema, Type.Null()])
 
-export const Side = Type.Union([Type.Literal('attack'), Type.Literal('defense')])
+export const Literal = <const T extends string>(value: T) => Type.Unsafe<T>(Type.Literal(value))
+
+export const Literals = <const T extends readonly [string, ...string[]]>(
+  values: T,
+  options: { default?: T[number] } = {},
+) =>
+  Type.Unsafe<T[number]>(
+    Type.Union(
+      values.map((value) => Type.Literal(value)),
+      options,
+    ),
+  )
+
+export const Side = Literals(['attack', 'defense'])
 
 export const Rate = Type.Number({ minimum: 0, maximum: 1 })
 

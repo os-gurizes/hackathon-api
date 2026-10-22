@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm'
 import { Type, type Static } from 'typebox'
 
-import { Rate } from './schema.js'
+import { Literals, Rate } from './schema.js'
 
 export const StatLine = Type.Object({
   matches: Type.Integer(),
@@ -87,7 +87,4 @@ export const SORT_EXPRESSIONS = {
 
 export type SortKey = keyof typeof SORT_EXPRESSIONS
 
-export const SortQuery = Type.Union(
-  (Object.keys(SORT_EXPRESSIONS) as SortKey[]).map((key) => Type.Literal(key)),
-  { default: 'acs' },
-)
+export const SortQuery = Literals(['acs', 'kd', 'adr', 'kast', 'hs', 'fk'], { default: 'acs' })

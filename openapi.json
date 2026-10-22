@@ -6143,6 +6143,739 @@
           }
         }
       }
+    },
+    "/maps/{id}/heatmap": {
+      "get": {
+        "tags": [
+          "maps"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "presence"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "kills"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "deaths"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "kd"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "first_kills"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "first_deaths"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "traded_deaths"
+                  ]
+                }
+              ],
+              "default": "presence"
+            },
+            "in": "query",
+            "name": "metric",
+            "required": true
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "cells"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "zones"
+                  ]
+                }
+              ],
+              "default": "cells"
+            },
+            "in": "query",
+            "name": "resolution",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "attack"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "side",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "player",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "agent",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "mapId",
+                    "metric",
+                    "resolution",
+                    "grid",
+                    "maxValue",
+                    "cells",
+                    "zones"
+                  ],
+                  "properties": {
+                    "mapId": {
+                      "type": "integer"
+                    },
+                    "metric": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "presence"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "kills"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "deaths"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "kd"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "first_kills"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "first_deaths"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "traded_deaths"
+                          ]
+                        }
+                      ],
+                      "default": "presence"
+                    },
+                    "resolution": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "cells"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "zones"
+                          ]
+                        }
+                      ]
+                    },
+                    "grid": {
+                      "type": "integer"
+                    },
+                    "maxValue": {
+                      "type": "number"
+                    },
+                    "cells": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "x",
+                          "y",
+                          "value",
+                          "sampleSize"
+                        ],
+                        "properties": {
+                          "x": {
+                            "type": "integer"
+                          },
+                          "y": {
+                            "type": "integer"
+                          },
+                          "value": {
+                            "type": "number"
+                          },
+                          "sampleSize": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "zones": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "zoneId",
+                          "name",
+                          "value",
+                          "sampleSize",
+                          "tradeRate",
+                          "presence",
+                          "kills",
+                          "deaths",
+                          "firstKills",
+                          "firstDeaths",
+                          "tradedDeaths"
+                        ],
+                        "properties": {
+                          "zoneId": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "number"
+                          },
+                          "sampleSize": {
+                            "type": "integer"
+                          },
+                          "tradeRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1,
+                            "nullable": true
+                          },
+                          "presence": {
+                            "type": "integer"
+                          },
+                          "kills": {
+                            "type": "integer"
+                          },
+                          "deaths": {
+                            "type": "integer"
+                          },
+                          "firstKills": {
+                            "type": "integer"
+                          },
+                          "firstDeaths": {
+                            "type": "integer"
+                          },
+                          "tradedDeaths": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}/stats": {
+      "get": {
+        "tags": [
+          "maps"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "mapId",
+                    "matches",
+                    "rounds",
+                    "sides",
+                    "sites",
+                    "agents"
+                  ],
+                  "properties": {
+                    "mapId": {
+                      "type": "integer"
+                    },
+                    "matches": {
+                      "type": "integer"
+                    },
+                    "rounds": {
+                      "type": "integer"
+                    },
+                    "sides": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "side",
+                          "roundWinRate"
+                        ],
+                        "properties": {
+                          "side": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "attack"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "defense"
+                                ]
+                              }
+                            ]
+                          },
+                          "roundWinRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        }
+                      }
+                    },
+                    "sites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "site",
+                          "plants",
+                          "plantShare",
+                          "attackWinRateAfterPlant"
+                        ],
+                        "properties": {
+                          "site": {
+                            "type": "string"
+                          },
+                          "plants": {
+                            "type": "integer"
+                          },
+                          "plantShare": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "attackWinRateAfterPlant": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        }
+                      }
+                    },
+                    "agents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "agent",
+                          "picks",
+                          "pickRate",
+                          "winRate"
+                        ],
+                        "properties": {
+                          "agent": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name",
+                              "role"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          },
+                          "picks": {
+                            "type": "integer"
+                          },
+                          "pickRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "winRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

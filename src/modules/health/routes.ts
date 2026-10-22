@@ -3,9 +3,10 @@ import { desc } from 'drizzle-orm'
 import { Type } from 'typebox'
 
 import { ingestRuns } from '../../db/analytics/schema.js'
+import { Literal } from '../../shared/schema.js'
 
 const HealthResponse = Type.Object({
-  status: Type.Literal('ok'),
+  status: Literal('ok'),
   pipelineVersion: Type.Union([Type.String(), Type.Null()]),
   lastIngestAt: Type.Union([Type.String({ format: 'date-time' }), Type.Null()]),
 })

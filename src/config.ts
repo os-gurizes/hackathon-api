@@ -1,6 +1,7 @@
 import { Type, type Static } from 'typebox'
 
 import { parseWith } from './shared/parse.js'
+import { Literals } from './shared/schema.js'
 
 const ConfigSchema = Type.Object({
   DATABASE_URL: Type.String({ minLength: 1 }),
@@ -9,9 +10,7 @@ const ConfigSchema = Type.Object({
   JWT_SECRET: Type.String({ minLength: 16 }),
   COOKIE_SECRET: Type.String({ minLength: 16 }),
   CORS_ORIGIN: Type.String({ default: 'http://localhost:5173' }),
-  NODE_ENV: Type.Union([Type.Literal('development'), Type.Literal('test'), Type.Literal('production')], {
-    default: 'development',
-  }),
+  NODE_ENV: Literals(['development', 'test', 'production'], { default: 'development' }),
 })
 
 export type Config = Static<typeof ConfigSchema>

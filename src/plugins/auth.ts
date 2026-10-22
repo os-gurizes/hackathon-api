@@ -1,7 +1,9 @@
 import jwt from '@fastify/jwt'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { eq } from 'drizzle-orm'
 import fp from 'fastify-plugin'
 
+import { users } from '../db/app/schema.js'
 import { forbidden, unauthorized } from '../shared/errors.js'
 import { asUserId, type UserId } from '../shared/ids.js'
 
@@ -43,6 +45,12 @@ export const authPlugin = fp(async (app) => {
     } catch {
       throw unauthorized()
     }
+    const [current] = await app.db
+      .select({ role: users.role })
+      .from(users)
+      .where(eq(users.id, request.user.id))
+    if (!current) throw unauthorized()
+    request.user = { id: request.user.id, role: current.role }
   })
 
   app.decorate('requireRole', (...roles: Role[]) => async (request: FastifyRequest, reply: FastifyReply) => {

@@ -9,6 +9,7 @@ const ConfigSchema = Type.Object({
   JWT_SECRET: Type.String({ minLength: 16 }),
   COOKIE_SECRET: Type.String({ minLength: 16 }),
   CORS_ORIGIN: Type.String({ default: 'http://localhost:5173' }),
+  COOKIE_SECURE: Type.Optional(Type.Boolean()),
   NODE_ENV: Type.Union([Type.Literal('development'), Type.Literal('test'), Type.Literal('production')], {
     default: 'development',
   }),

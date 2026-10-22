@@ -6,7 +6,9 @@ import { pick, roundRefs } from '../../shared/rounds.js'
 import { rows, where } from '../../shared/sql.js'
 import { fixed } from '../../shared/stats.js'
 import type {
+  AbilitiesQuery,
   AnalysisQuery,
+  PatternsQuery,
   Combos,
   PlayerAbilities,
   PlayerPattern,
@@ -27,7 +29,12 @@ function scoped(query: AnalysisQuery, columns: Columns, extra: Array<SQL | undef
 
 type BuyType = TeamEconomy['byBuyType'][number]['buyType']
 
-export async function teamEconomy(db: Database, teamId: number, query: AnalysisQuery): Promise<TeamEconomy> {
+export async function teamEconomy(
+  db: Database,
+  teamId: number,
+  query: AnalysisQuery,
+  onlyPlayer?: number,
+): Promise<TeamEconomy> {
   const columns = { stage: sql`e.stage_id`, map: sql`e.map_id`, side: sql`e.side` }
   const filter = scoped(query, columns, [sql`e.team_id = ${teamId}`])
   const [byBuy, matrix, flags] = await Promise.all([
@@ -62,7 +69,7 @@ export async function teamEconomy(db: Database, teamId: number, query: AnalysisQ
           FROM analytics.economy_flags f
           JOIN analytics.round_team_economy e ON e.round_id = f.round_id AND e.team_id = f.team_id
           LEFT JOIN analytics.players p ON p.id = f.player_id
-          WHERE ${filter}
+          WHERE ${filter} AND ${ownRows(sql`f.player_id`, onlyPlayer)}
           GROUP BY f.flag, f.player_id, p.game_name, p.tag_line
           ORDER BY count(*) DESC`,
     ),
@@ -101,6 +108,9 @@ export async function teamEconomy(db: Database, teamId: number, query: AnalysisQ
     })),
   }
 }
+
+const ownRows = (column: SQL, onlyPlayer: number | undefined): SQL =>
+  onlyPlayer === undefined ? sql`TRUE` : sql`(${column} IS NULL OR ${column} = ${onlyPlayer})`
 
 export function wilson(wins: number, n: number, z = 1.96): [number, number] {
   if (n === 0) return [0, 0]
@@ -186,7 +196,12 @@ const ROUND_SCOPE = (query: AnalysisQuery, extra: SQL) => sql`
   JOIN analytics.series se ON se.id = m.series_id
   WHERE ${scoped(query, { stage: sql`se.stage_id`, map: sql`m.map_id`, side: sql`t.side` }, [extra])}`
 
-export async function teamRotations(db: Database, teamId: number, query: AnalysisQuery): Promise<Rotations> {
+export async function teamRotations(
+  db: Database,
+  teamId: number,
+  query: AnalysisQuery,
+  onlyPlayer?: number,
+): Promise<Rotations> {
   const scope = ROUND_SCOPE(query, sql`t.team_id = ${teamId}`)
   const [summary, byPlayer, examples] = await Promise.all([
     rows<{ side: 'attack' | 'defense'; informed: boolean; rotations: number; fell: number; won: number }>(
@@ -209,6 +224,7 @@ export async function teamRotations(db: Database, teamId: number, query: Analysi
                  count(*) FILTER (WHERE NOT t.informed)::int AS uninformed,
                  count(*) FILTER (WHERE NOT t.informed AND t.source_fell)::int AS fell
           FROM analytics.rotations t JOIN analytics.players p ON p.id = t.player_id ${scope}
+            AND ${ownRows(sql`t.player_id`, onlyPlayer)}
           GROUP BY p.id ORDER BY count(*) FILTER (WHERE NOT t.informed) DESC`,
     ),
     rows<{
@@ -226,6 +242,7 @@ export async function teamRotations(db: Database, teamId: number, query: Analysi
       sql`SELECT t.round_id::text, p.id AS player_id, p.game_name, p.tag_line, t.from_region, t.to_region,
                  t.left_after_ms, t.seen_at_ms, t.source_fell
           FROM analytics.rotations t JOIN analytics.players p ON p.id = t.player_id ${scope} AND NOT t.informed
+            AND ${ownRows(sql`t.player_id`, onlyPlayer)}
           ORDER BY t.source_fell DESC, t.round_id DESC LIMIT ${EXAMPLES * 2}`,
     ),
   ])
@@ -266,7 +283,12 @@ export async function teamRotations(db: Database, teamId: number, query: Analysi
   }
 }
 
-export async function teamCombos(db: Database, teamId: number, query: AnalysisQuery): Promise<Combos> {
+export async function teamCombos(
+  db: Database,
+  teamId: number,
+  query: AnalysisQuery,
+  onlyPlayer?: number,
+): Promise<Combos> {
   const data = await rows<{
     kind: 'assist' | 'ability_followup'
     a_id: number
@@ -300,6 +322,7 @@ export async function teamCombos(db: Database, teamId: number, query: AnalysisQu
         JOIN analytics.agents ab ON ab.id = c.agent_b
         WHERE ${scoped(query, { stage: sql`c.stage_id`, map: sql`c.map_id`, side: sql`c.side` }, [
           sql`c.team_id = ${teamId}`,
+          onlyPlayer === undefined ? undefined : sql`${onlyPlayer} IN (c.player_a, c.player_b)`,
         ])}
         GROUP BY c.kind, pa.id, pb.id, aa.id, ab.id
         ORDER BY sum(c.occurrences) DESC
@@ -358,7 +381,7 @@ export async function pressure(
     const b = base.get(m.context)
     return {
       context: m.context,
-      rounds: m.rounds,
+      playerRounds: m.rounds,
       winRate: rate(m.won, m.rounds),
       survivalRate: rate(m.survived, m.rounds),
       kd: fixed(m.kills / Math.max(m.deaths, 1), 2),
@@ -375,7 +398,7 @@ export async function pressure(
 export async function playerPatterns(
   db: Database,
   playerId: number,
-  query: AnalysisQuery,
+  query: PatternsQuery,
 ): Promise<PlayerPattern[]> {
   const data = await rows<{
     pattern: PlayerPattern['pattern']
@@ -430,11 +453,14 @@ export async function playerPatterns(
 export async function playerAbilities(
   db: Database,
   playerId: number,
-  query: AnalysisQuery,
+  query: AbilitiesQuery,
 ): Promise<PlayerAbilities> {
   const usageFilter = where([
     sql`u.player_id = ${playerId}`,
     query.map === undefined ? undefined : sql`u.map_id = ${query.map}`,
+    ...filterConditions(query, {
+      stage: sql`(SELECT se.stage_id FROM analytics.matches mm JOIN analytics.series se ON se.id = mm.series_id WHERE mm.id = u.match_id)`,
+    }),
   ])
   const [kills, usage] = await Promise.all([
     rows<{
@@ -452,7 +478,12 @@ export async function playerAbilities(
           FROM analytics.ability_kills k
           JOIN analytics.agents a ON a.id = k.agent_id
           JOIN analytics.matches m ON m.id = k.match_id
-          WHERE ${where([sql`k.player_id = ${playerId}`, query.map === undefined ? undefined : sql`m.map_id = ${query.map}`])}
+          JOIN analytics.series se ON se.id = m.series_id
+          WHERE ${where([
+            sql`k.player_id = ${playerId}`,
+            query.map === undefined ? undefined : sql`m.map_id = ${query.map}`,
+            ...filterConditions(query, { stage: sql`se.stage_id` }),
+          ])}
           GROUP BY a.id, k.slot, k.ability_name ORDER BY sum(k.kills) DESC`,
     ),
     rows<{

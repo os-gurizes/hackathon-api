@@ -26,3 +26,18 @@ describe('parseWith', () => {
     expect(input).toEqual({ A: 'x', OUTRA: 'y' })
   })
 })
+
+describe('codeForStatus', () => {
+  it('usa o código certo para cada status', async () => {
+    const { codeForStatus } = await import('../src/shared/errors.js')
+    expect([401, 403, 404, 409, 413, 415, 503].map(codeForStatus)).toEqual([
+      'UNAUTHORIZED',
+      'FORBIDDEN',
+      'NOT_FOUND',
+      'CONFLICT',
+      'VALIDATION',
+      'VALIDATION',
+      'INTERNAL',
+    ])
+  })
+})

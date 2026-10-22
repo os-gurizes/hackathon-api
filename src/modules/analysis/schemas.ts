@@ -10,6 +10,17 @@ export const AnalysisQuery = Type.Object({
   side: Type.Optional(Side),
 })
 
+export const PatternsQuery = Type.Object({
+  map: AnalysisQuery.properties.map,
+  side: AnalysisQuery.properties.side,
+})
+
+export const AbilitiesQuery = Type.Object({
+  tournament: AnalysisQuery.properties.tournament,
+  stage: AnalysisQuery.properties.stage,
+  map: AnalysisQuery.properties.map,
+})
+
 export const BuyType = Literals(['pistol', 'eco', 'semi_eco', 'half_buy', 'full_buy'])
 
 export const TeamEconomy = Type.Object({
@@ -115,7 +126,7 @@ export const Combos = Type.Object({ isEstimate: Type.Boolean(), combos: Type.Arr
 
 export const PressureLine = Type.Object({
   context: Type.String(),
-  rounds: Type.Integer(),
+  playerRounds: Type.Integer(),
   winRate: Rate,
   survivalRate: Rate,
   kd: Type.Number(),
@@ -160,6 +171,8 @@ export const PlayerAbilities = Type.Object({
 })
 
 export type AnalysisQuery = Static<typeof AnalysisQuery>
+export type PatternsQuery = Static<typeof PatternsQuery>
+export type AbilitiesQuery = Static<typeof AbilitiesQuery>
 export type TeamEconomy = Static<typeof TeamEconomy>
 export type StrategyUsage = Static<typeof StrategyUsage>
 export type Rotations = Static<typeof Rotations>

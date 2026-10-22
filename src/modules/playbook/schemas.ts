@@ -10,7 +10,7 @@ export const Point = Type.Object({ x: Coordinate, y: Coordinate })
 const Color = Type.String({ pattern: '^#[0-9a-fA-F]{6}$' })
 const ShapeId = Type.String({ minLength: 1, maxLength: 64 })
 
-export const Shape = Type.Union([
+const SHAPE_BRANCHES = [
   Type.Object({
     id: ShapeId,
     kind: Literal('path'),
@@ -23,7 +23,7 @@ export const Shape = Type.Union([
     id: ShapeId,
     kind: Literal('marker'),
     at: Point,
-    agentId: Nullable(Type.Integer({ minimum: 1 })),
+    agentId: Nullable(Type.Integer({ minimum: 1, maximum: 32767 })),
     label: Type.String({ maxLength: 40 }),
   }),
   Type.Object({
@@ -39,7 +39,16 @@ export const Shape = Type.Union([
     at: Point,
     text: Type.String({ minLength: 1, maxLength: 200 }),
   }),
-])
+] as const
+
+const ShapeUnion = Type.Union([...SHAPE_BRANCHES])
+
+export const Shape = Type.Unsafe<Static<typeof ShapeUnion>>({
+  type: 'object',
+  required: ['kind'],
+  discriminator: { propertyName: 'kind' },
+  oneOf: [...SHAPE_BRANCHES],
+})
 
 export const DrawingLayer = Type.Object({
   id: Type.String({ minLength: 1, maxLength: 64 }),
@@ -50,12 +59,12 @@ export const DrawingLayer = Type.Object({
 })
 
 export const StrategyInput = Type.Object({
-  mapId: Type.Integer({ minimum: 1 }),
+  mapId: Type.Integer({ minimum: 1, maximum: 32767 }),
   side: Side,
   title: Type.String({ minLength: 1, maxLength: 120 }),
   notes: Type.String({ maxLength: 5000, default: '' }),
   layers: Type.Array(DrawingLayer, { maxItems: 12 }),
-  linkedClusterId: Nullable(Type.Integer({ minimum: 1 })),
+  linkedClusterId: Nullable(Type.Integer({ minimum: 1, maximum: 2147483647 })),
   sharedWithPlayers: Type.Boolean({ default: false }),
 })
 
@@ -80,7 +89,7 @@ export const PlaybookSummary = Type.Object({
 })
 
 export const PlaybookQuery = Type.Object({
-  map: Type.Optional(Type.Integer({ minimum: 1 })),
+  map: Type.Optional(Type.Integer({ minimum: 1, maximum: 32767 })),
   side: Type.Optional(Side),
 })
 

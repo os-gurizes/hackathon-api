@@ -977,8 +977,7 @@
                     "minimum": 1,
                     "nullable": true
                   }
-                },
-                "minProperties": 1
+                }
               }
             }
           }
@@ -987,7 +986,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -1222,7 +1222,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -1398,7 +1399,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -1703,7 +1705,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -2070,7 +2073,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -2079,7 +2083,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -2088,7 +2093,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -2097,7 +2103,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -2106,7 +2113,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "player",
@@ -2383,7 +2391,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -2739,7 +2748,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -3425,7 +3435,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -3434,7 +3445,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -3443,7 +3455,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -3473,7 +3486,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -3482,7 +3496,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "player",
@@ -3491,7 +3506,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "agent",
@@ -3637,7 +3653,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -3659,7 +3675,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -3803,7 +3819,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -3892,7 +3909,7 @@
                       "required": [
                         "matches",
                         "rounds",
-                        "winRate",
+                        "roundWinRate",
                         "acs",
                         "kd",
                         "kills",
@@ -3914,7 +3931,7 @@
                         "rounds": {
                           "type": "integer"
                         },
-                        "winRate": {
+                        "roundWinRate": {
                           "type": "number",
                           "minimum": 0,
                           "maximum": 1
@@ -4083,7 +4100,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -4092,7 +4110,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -4101,7 +4120,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -4131,7 +4151,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -4140,7 +4161,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "agent",
@@ -4149,7 +4171,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -4181,7 +4204,7 @@
                       "required": [
                         "matches",
                         "rounds",
-                        "winRate",
+                        "roundWinRate",
                         "acs",
                         "kd",
                         "kills",
@@ -4203,7 +4226,7 @@
                         "rounds": {
                           "type": "integer"
                         },
-                        "winRate": {
+                        "roundWinRate": {
                           "type": "number",
                           "minimum": 0,
                           "maximum": 1
@@ -4286,7 +4309,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4308,7 +4331,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -4395,7 +4418,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4417,7 +4440,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -4500,7 +4523,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4522,7 +4545,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -4702,7 +4725,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -4732,7 +4756,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -4976,7 +5001,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -4985,7 +5011,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -4994,7 +5021,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -5024,7 +5052,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -5033,7 +5062,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "agent",
@@ -5042,7 +5072,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -5094,7 +5125,7 @@
                         "required": [
                           "matches",
                           "rounds",
-                          "winRate",
+                          "roundWinRate",
                           "acs",
                           "kd",
                           "kills",
@@ -5116,7 +5147,7 @@
                           "rounds": {
                             "type": "integer"
                           },
-                          "winRate": {
+                          "roundWinRate": {
                             "type": "number",
                             "minimum": 0,
                             "maximum": 1
@@ -5255,7 +5286,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -5264,7 +5296,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -5273,7 +5306,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -5303,7 +5337,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -5312,7 +5347,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "agent",
@@ -5321,7 +5357,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -5605,7 +5642,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -5858,7 +5896,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -5867,7 +5906,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -5876,7 +5916,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -5906,7 +5947,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -5915,7 +5957,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "player",
@@ -5924,7 +5967,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "agent",
@@ -6227,7 +6271,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -6236,7 +6281,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -6266,7 +6312,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -6275,7 +6322,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "player",
@@ -6284,7 +6332,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "agent",
@@ -6293,7 +6342,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -6628,7 +6678,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "tournament",
@@ -6637,7 +6688,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "stage",
@@ -6646,7 +6698,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "query",
             "name": "team",
@@ -6655,7 +6708,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -6807,6 +6861,73 @@
               }
             }
           },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "404": {
             "description": "Default Response",
             "content": {
@@ -6934,7 +7055,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -7408,7 +7530,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -7796,7 +7919,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -8182,7 +8306,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -8537,7 +8662,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -8560,7 +8686,7 @@
                     "type": "object",
                     "required": [
                       "context",
-                      "rounds",
+                      "playerRounds",
                       "winRate",
                       "survivalRate",
                       "kd",
@@ -8571,7 +8697,7 @@
                       "context": {
                         "type": "string"
                       },
-                      "rounds": {
+                      "playerRounds": {
                         "type": "integer"
                       },
                       "winRate": {
@@ -8768,24 +8894,6 @@
               "minimum": 1
             },
             "in": "query",
-            "name": "tournament",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "in": "query",
-            "name": "stage",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "in": "query",
             "name": "map",
             "required": false
           },
@@ -8813,7 +8921,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -9184,7 +9293,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -9207,7 +9317,7 @@
                     "type": "object",
                     "required": [
                       "context",
-                      "rounds",
+                      "playerRounds",
                       "winRate",
                       "survivalRate",
                       "kd",
@@ -9218,7 +9328,7 @@
                       "context": {
                         "type": "string"
                       },
-                      "rounds": {
+                      "playerRounds": {
                         "type": "integer"
                       },
                       "winRate": {
@@ -9438,29 +9548,9 @@
           },
           {
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "enum": [
-                    "attack"
-                  ]
-                },
-                {
-                  "type": "string",
-                  "enum": [
-                    "defense"
-                  ]
-                }
-              ]
-            },
-            "in": "query",
-            "name": "side",
-            "required": false
-          },
-          {
-            "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -10124,7 +10214,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 32767
             },
             "in": "query",
             "name": "map",
@@ -10154,7 +10245,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -10464,7 +10556,8 @@
                 "properties": {
                   "mapId": {
                     "type": "integer",
-                    "minimum": 1
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "side": {
                     "anyOf": [
@@ -10549,7 +10642,14 @@
                         "shapes": {
                           "type": "array",
                           "items": {
-                            "anyOf": [
+                            "type": "object",
+                            "required": [
+                              "kind"
+                            ],
+                            "discriminator": {
+                              "propertyName": "kind"
+                            },
+                            "oneOf": [
                               {
                                 "type": "object",
                                 "required": [
@@ -10714,6 +10814,7 @@
                                   "agentId": {
                                     "type": "integer",
                                     "minimum": 1,
+                                    "maximum": 32767,
                                     "nullable": true
                                   },
                                   "label": {
@@ -10835,6 +10936,7 @@
                   "linkedClusterId": {
                     "type": "integer",
                     "minimum": 1,
+                    "maximum": 2147483647,
                     "nullable": true
                   },
                   "sharedWithPlayers": {
@@ -10850,7 +10952,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -10890,7 +10993,8 @@
                     },
                     "mapId": {
                       "type": "integer",
-                      "minimum": 1
+                      "minimum": 1,
+                      "maximum": 32767
                     },
                     "side": {
                       "anyOf": [
@@ -10975,7 +11079,14 @@
                           "shapes": {
                             "type": "array",
                             "items": {
-                              "anyOf": [
+                              "type": "object",
+                              "required": [
+                                "kind"
+                              ],
+                              "discriminator": {
+                                "propertyName": "kind"
+                              },
+                              "oneOf": [
                                 {
                                   "type": "object",
                                   "required": [
@@ -11140,6 +11251,7 @@
                                     "agentId": {
                                       "type": "integer",
                                       "minimum": 1,
+                                      "maximum": 32767,
                                       "nullable": true
                                     },
                                     "label": {
@@ -11261,6 +11373,7 @@
                     "linkedClusterId": {
                       "type": "integer",
                       "minimum": 1,
+                      "maximum": 2147483647,
                       "nullable": true
                     },
                     "sharedWithPlayers": {
@@ -11489,7 +11602,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -11529,7 +11643,8 @@
                     },
                     "mapId": {
                       "type": "integer",
-                      "minimum": 1
+                      "minimum": 1,
+                      "maximum": 32767
                     },
                     "side": {
                       "anyOf": [
@@ -11614,7 +11729,14 @@
                           "shapes": {
                             "type": "array",
                             "items": {
-                              "anyOf": [
+                              "type": "object",
+                              "required": [
+                                "kind"
+                              ],
+                              "discriminator": {
+                                "propertyName": "kind"
+                              },
+                              "oneOf": [
                                 {
                                   "type": "object",
                                   "required": [
@@ -11779,6 +11901,7 @@
                                     "agentId": {
                                       "type": "integer",
                                       "minimum": 1,
+                                      "maximum": 32767,
                                       "nullable": true
                                     },
                                     "label": {
@@ -11900,6 +12023,7 @@
                     "linkedClusterId": {
                       "type": "integer",
                       "minimum": 1,
+                      "maximum": 2147483647,
                       "nullable": true
                     },
                     "sharedWithPlayers": {
@@ -12140,7 +12264,8 @@
                 "properties": {
                   "mapId": {
                     "type": "integer",
-                    "minimum": 1
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "side": {
                     "anyOf": [
@@ -12225,7 +12350,14 @@
                         "shapes": {
                           "type": "array",
                           "items": {
-                            "anyOf": [
+                            "type": "object",
+                            "required": [
+                              "kind"
+                            ],
+                            "discriminator": {
+                              "propertyName": "kind"
+                            },
+                            "oneOf": [
                               {
                                 "type": "object",
                                 "required": [
@@ -12390,6 +12522,7 @@
                                   "agentId": {
                                     "type": "integer",
                                     "minimum": 1,
+                                    "maximum": 32767,
                                     "nullable": true
                                   },
                                   "label": {
@@ -12511,6 +12644,7 @@
                   "linkedClusterId": {
                     "type": "integer",
                     "minimum": 1,
+                    "maximum": 2147483647,
                     "nullable": true
                   },
                   "sharedWithPlayers": {
@@ -12526,7 +12660,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",
@@ -12566,7 +12701,8 @@
                     },
                     "mapId": {
                       "type": "integer",
-                      "minimum": 1
+                      "minimum": 1,
+                      "maximum": 32767
                     },
                     "side": {
                       "anyOf": [
@@ -12651,7 +12787,14 @@
                           "shapes": {
                             "type": "array",
                             "items": {
-                              "anyOf": [
+                              "type": "object",
+                              "required": [
+                                "kind"
+                              ],
+                              "discriminator": {
+                                "propertyName": "kind"
+                              },
+                              "oneOf": [
                                 {
                                   "type": "object",
                                   "required": [
@@ -12816,6 +12959,7 @@
                                     "agentId": {
                                       "type": "integer",
                                       "minimum": 1,
+                                      "maximum": 32767,
                                       "nullable": true
                                     },
                                     "label": {
@@ -12937,6 +13081,7 @@
                     "linkedClusterId": {
                       "type": "integer",
                       "minimum": 1,
+                      "maximum": 2147483647,
                       "nullable": true
                     },
                     "sharedWithPlayers": {
@@ -13163,7 +13308,8 @@
           {
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 2147483647
             },
             "in": "path",
             "name": "id",

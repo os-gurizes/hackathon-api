@@ -17,7 +17,9 @@ import {
   teamStrategies,
 } from './repository.js'
 import {
+  AbilitiesQuery,
   AnalysisQuery,
+  PatternsQuery,
   Combos,
   PlayerAbilities,
   PlayerPattern,
@@ -35,12 +37,13 @@ export const analysisRoutes: FastifyPluginAsyncTypebox = async (app) => {
     params: IdParams,
     querystring: AnalysisQuery,
   }
-  const player = { ...team, tags: ['player analysis'] }
+  const player = { tags: ['player analysis'], security: [{ cookieAuth: [] }], params: IdParams }
 
-  async function allowTeam(request: FastifyRequest, id: number): Promise<void> {
+  async function allowTeam(request: FastifyRequest, id: number): Promise<number | undefined> {
     if (!(await teamExists(app.db, id))) throw notFound('Time')
     const viewer = await loadViewer(app.db, request.user)
     await assert(canViewTeamAnalytics(app.db, viewer, id))
+    return viewer.role === 'player' ? (viewer.playerId ?? 0) : undefined
   }
 
   async function allowPlayer(request: FastifyRequest, id: number): Promise<void> {
@@ -53,8 +56,8 @@ export const analysisRoutes: FastifyPluginAsyncTypebox = async (app) => {
     '/teams/:id/economy',
     { schema: { ...team, response: { 200: TeamEconomy, ...errors } } },
     async (request) => {
-      await allowTeam(request, request.params.id)
-      return teamEconomy(app.db, request.params.id, request.query)
+      const onlyPlayer = await allowTeam(request, request.params.id)
+      return teamEconomy(app.db, request.params.id, request.query, onlyPlayer)
     },
   )
 
@@ -71,8 +74,8 @@ export const analysisRoutes: FastifyPluginAsyncTypebox = async (app) => {
     '/teams/:id/rotations',
     { schema: { ...team, response: { 200: Rotations, ...errors } } },
     async (request) => {
-      await allowTeam(request, request.params.id)
-      return teamRotations(app.db, request.params.id, request.query)
+      const onlyPlayer = await allowTeam(request, request.params.id)
+      return teamRotations(app.db, request.params.id, request.query, onlyPlayer)
     },
   )
 
@@ -80,8 +83,8 @@ export const analysisRoutes: FastifyPluginAsyncTypebox = async (app) => {
     '/teams/:id/combos',
     { schema: { ...team, response: { 200: Combos, ...errors } } },
     async (request) => {
-      await allowTeam(request, request.params.id)
-      return teamCombos(app.db, request.params.id, request.query)
+      const onlyPlayer = await allowTeam(request, request.params.id)
+      return teamCombos(app.db, request.params.id, request.query, onlyPlayer)
     },
   )
 
@@ -96,7 +99,13 @@ export const analysisRoutes: FastifyPluginAsyncTypebox = async (app) => {
 
   app.get(
     '/players/:id/patterns',
-    { schema: { ...player, response: { 200: Type.Array(PlayerPattern), ...errors } } },
+    {
+      schema: {
+        ...player,
+        querystring: PatternsQuery,
+        response: { 200: Type.Array(PlayerPattern), ...errors },
+      },
+    },
     async (request) => {
       await allowPlayer(request, request.params.id)
       return playerPatterns(app.db, request.params.id, request.query)
@@ -105,7 +114,13 @@ export const analysisRoutes: FastifyPluginAsyncTypebox = async (app) => {
 
   app.get(
     '/players/:id/pressure',
-    { schema: { ...player, response: { 200: Type.Array(PressureLine), ...errors } } },
+    {
+      schema: {
+        ...player,
+        querystring: AnalysisQuery,
+        response: { 200: Type.Array(PressureLine), ...errors },
+      },
+    },
     async (request) => {
       await allowPlayer(request, request.params.id)
       return pressure(app.db, { column: 'player_id', id: request.params.id }, request.query)
@@ -114,7 +129,7 @@ export const analysisRoutes: FastifyPluginAsyncTypebox = async (app) => {
 
   app.get(
     '/players/:id/abilities',
-    { schema: { ...player, response: { 200: PlayerAbilities, ...errors } } },
+    { schema: { ...player, querystring: AbilitiesQuery, response: { 200: PlayerAbilities, ...errors } } },
     async (request) => {
       await allowPlayer(request, request.params.id)
       return playerAbilities(app.db, request.params.id, request.query)

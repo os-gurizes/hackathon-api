@@ -18,9 +18,9 @@ const TEAM_MATCHES = sql`
   SELECT t.id, t.slug, t.display_name, count(m.id)::int AS matches,
          count(m.id) FILTER (WHERE m.winner_team_id = t.id)::int AS wins
   FROM analytics.teams t
-  JOIN analytics.matches m ON t.id IN (m.red_team_id, m.blue_team_id)
-  JOIN analytics.series s ON s.id = m.series_id
-  JOIN analytics.stages st ON st.id = s.stage_id`
+  LEFT JOIN analytics.matches m ON t.id IN (m.red_team_id, m.blue_team_id)
+  LEFT JOIN analytics.series s ON s.id = m.series_id
+  LEFT JOIN analytics.stages st ON st.id = s.stage_id`
 
 export async function listTeams(db: Database, query: TeamsQuery): Promise<TeamSummary[]> {
   const data = await rows<SummaryRow>(

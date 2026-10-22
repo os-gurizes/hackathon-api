@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm'
 import { beforeAll, describe, expect, it } from 'vitest'
 
 import { createUser, login, useApp, viewerToken } from './helpers.js'
@@ -86,6 +87,13 @@ describe('estatísticas do mapa', () => {
     )
     expect(stats.agents.reduce((n: number, a: { pickRate: number }) => n + a.pickRate, 0)).toBeCloseTo(5, 1)
     const team = (await get(`/maps/${ASCENT}/stats?team=${GOLDEN}`)).json()
+    const [teamAttack, teamDefense] = team.sides
+    const own = await app().db.execute<{ attack: number; defense: number }>(sql`
+      SELECT round(avg((r.winner_team_id = ${GOLDEN})::int) FILTER (WHERE r.attack_team_id = ${GOLDEN}), 3)::float8 AS attack,
+             round(avg((r.winner_team_id = ${GOLDEN})::int) FILTER (WHERE r.defense_team_id = ${GOLDEN}), 3)::float8 AS defense
+      FROM analytics.rounds r JOIN analytics.matches m ON m.id = r.match_id WHERE m.map_id = ${ASCENT}`)
+    expect(teamAttack.roundWinRate).toBeCloseTo(own.rows[0]?.attack ?? -1, 3)
+    expect(teamDefense.roundWinRate).toBeCloseTo(own.rows[0]?.defense ?? -1, 3)
     expect(team.agents.reduce((n: number, a: { pickRate: number }) => n + a.pickRate, 0)).toBeCloseTo(5, 1)
   })
 })

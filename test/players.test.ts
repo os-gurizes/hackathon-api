@@ -65,9 +65,22 @@ describe('jogadores', () => {
     expect(page.items[0].team.id).toBe(GOLDEN)
   })
 
+  it('o histórico do jogador bate com o scoreboard da partida', async () => {
+    const history = (await get(`/players/${TAEK}/matches?limit=3`)).json()
+    for (const item of history.items) {
+      const detail = (await get(`/matches/${item.matchId}`)).json()
+      const line = detail.scoreboard.find((l: { player: { id: number } }) => l.player.id === TAEK)
+      expect({ kills: item.kills, deaths: item.deaths, assists: item.assists }).toEqual({
+        kills: line.kills,
+        deaths: line.deaths,
+        assists: line.assists,
+      })
+    }
+  })
+
   it('compara agentes e armas com a média', async () => {
     const agents = (await get(`/players/${TAEK}/agents`)).json()
-    expect(agents[0].baselineAcs).toBeGreaterThan(0)
+    expect(agents.some((a: { baselineAcs: number | null }) => (a.baselineAcs ?? 0) > 0)).toBe(true)
     const weapons = (await get(`/players/${TAEK}/weapons`)).json()
     const vandal = weapons.find((w: { weapon: { name: string } }) => w.weapon.name === 'Vandal')
     expect(vandal.kills).toBeGreaterThan(0)

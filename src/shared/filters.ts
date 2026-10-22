@@ -4,13 +4,13 @@ import { Type, type Static } from 'typebox'
 import { Side } from './schema.js'
 
 export const Filters = {
-  tournament: Type.Optional(Type.Integer({ minimum: 1 })),
-  stage: Type.Optional(Type.Integer({ minimum: 1 })),
-  map: Type.Optional(Type.Integer({ minimum: 1 })),
+  tournament: Type.Optional(Type.Integer({ minimum: 1, maximum: 32767 })),
+  stage: Type.Optional(Type.Integer({ minimum: 1, maximum: 32767 })),
+  map: Type.Optional(Type.Integer({ minimum: 1, maximum: 32767 })),
   side: Type.Optional(Side),
-  team: Type.Optional(Type.Integer({ minimum: 1 })),
-  player: Type.Optional(Type.Integer({ minimum: 1 })),
-  agent: Type.Optional(Type.Integer({ minimum: 1 })),
+  team: Type.Optional(Type.Integer({ minimum: 1, maximum: 2147483647 })),
+  player: Type.Optional(Type.Integer({ minimum: 1, maximum: 2147483647 })),
+  agent: Type.Optional(Type.Integer({ minimum: 1, maximum: 32767 })),
 }
 
 export const FiltersQuery = Type.Object(Filters)

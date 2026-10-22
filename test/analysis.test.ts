@@ -120,3 +120,33 @@ describe('acesso às análises', () => {
     expect((await get('/players/99999/patterns', token)).statusCode).toBe(404)
   })
 })
+
+describe('detalhamento por jogador na análise do time', () => {
+  const app = useApp()
+  const get = (url: string, token: string) =>
+    app().inject({ method: 'GET', url, cookies: { access_token: token } })
+
+  it('player vê só as próprias linhas; coach vê o elenco inteiro', async () => {
+    await createUser(app(), { email: 'taek@rows.test', role: 'player', playerId: TAEK, teamId: GOLDEN })
+    await createUser(app(), { email: 'coach@rows.test', role: 'coach', teamId: GOLDEN })
+    const player = (await login(app(), 'taek@rows.test')).access
+    const coach = (await login(app(), 'coach@rows.test')).access
+
+    const asPlayer = (await get(`/teams/${GOLDEN}/rotations`, player)).json()
+    const asCoach = (await get(`/teams/${GOLDEN}/rotations`, coach)).json()
+    expect(asPlayer.byPlayer.every((r: { player: { id: number } }) => r.player.id === TAEK)).toBe(true)
+    expect(asCoach.byPlayer.length).toBeGreaterThan(1)
+    expect(asPlayer.summary).toEqual(asCoach.summary)
+
+    const combos = (await get(`/teams/${GOLDEN}/combos`, player)).json()
+    for (const c of combos.combos) expect([c.playerA.id, c.playerB.id]).toContain(TAEK)
+  })
+
+  it('habilidades respeitam o filtro de etapa', async () => {
+    await createUser(app(), { email: 'admin@rows.test', role: 'admin' })
+    const admin = (await login(app(), 'admin@rows.test')).access
+    const all = (await get(`/players/${TAEK}/abilities`, admin)).json()
+    const stage = (await get(`/players/${TAEK}/abilities?tournament=3`, admin)).json()
+    expect(stage.usage.matches).toBeLessThan(all.usage.matches)
+  })
+})

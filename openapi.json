@@ -8626,7 +8626,7 @@
                     "type": "object",
                     "required": [
                       "context",
-                      "rounds",
+                      "playerRounds",
                       "winRate",
                       "survivalRate",
                       "kd",
@@ -8637,7 +8637,7 @@
                       "context": {
                         "type": "string"
                       },
-                      "rounds": {
+                      "playerRounds": {
                         "type": "integer"
                       },
                       "winRate": {
@@ -8828,24 +8828,6 @@
           "player analysis"
         ],
         "parameters": [
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "in": "query",
-            "name": "tournament",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "in": "query",
-            "name": "stage",
-            "required": false
-          },
           {
             "schema": {
               "type": "integer",
@@ -9273,7 +9255,7 @@
                     "type": "object",
                     "required": [
                       "context",
-                      "rounds",
+                      "playerRounds",
                       "winRate",
                       "survivalRate",
                       "kd",
@@ -9284,7 +9266,7 @@
                       "context": {
                         "type": "string"
                       },
-                      "rounds": {
+                      "playerRounds": {
                         "type": "integer"
                       },
                       "winRate": {
@@ -9500,27 +9482,6 @@
             },
             "in": "query",
             "name": "map",
-            "required": false
-          },
-          {
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "enum": [
-                    "attack"
-                  ]
-                },
-                {
-                  "type": "string",
-                  "enum": [
-                    "defense"
-                  ]
-                }
-              ]
-            },
-            "in": "query",
-            "name": "side",
             "required": false
           },
           {

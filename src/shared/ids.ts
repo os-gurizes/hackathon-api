@@ -30,5 +30,8 @@ export const asSeriesId = (value: number) => value as SeriesId
 export const asUserId = (value: number) => value as UserId
 export const asStrategyId = (value: number) => value as StrategyId
 
-export const Id = Type.Integer({ minimum: 1 })
+export const MAX_INTEGER_ID = 2147483647
+export const MAX_SMALL_ID = 32767
+
+export const Id = Type.Integer({ minimum: 1, maximum: MAX_INTEGER_ID })
 export const IdParams = Type.Object({ id: Id })

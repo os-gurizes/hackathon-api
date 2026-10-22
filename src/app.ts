@@ -40,7 +40,9 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
   const app = Fastify({
     logger:
       config.NODE_ENV === 'test' ? false : { level: config.NODE_ENV === 'production' ? 'info' : 'debug' },
-    ajv: { customOptions: { removeAdditional: 'all', coerceTypes: true, useDefaults: true } },
+    ajv: {
+      customOptions: { removeAdditional: 'all', coerceTypes: true, useDefaults: true, discriminator: true },
+    },
   }).withTypeProvider<TypeBoxTypeProvider>()
 
   app.decorate('db', db)

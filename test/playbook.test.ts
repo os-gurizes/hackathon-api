@@ -142,3 +142,33 @@ describe('playbook', () => {
     expect((await post(huge)).statusCode).toBe(413)
   })
 })
+
+describe('validação robusta do playbook', () => {
+  const app = useApp()
+
+  it('aceita forma com campos extras sem perder os campos certos e recusa ids fora da faixa', async () => {
+    await createUser(app(), { email: 'coach@robust.test', role: 'coach', teamId: GOLDEN })
+    const token = (await login(app(), 'coach@robust.test')).access
+    const post = (body: object) =>
+      app().inject({
+        method: 'POST',
+        url: `/teams/${GOLDEN}/playbook`,
+        cookies: { access_token: token },
+        payload: body,
+      })
+    const mixed = { ...arrow('m'), points: [{ x: 0, y: 0 }], width: 2, extra: true }
+    const created = await post(
+      strategy({ layers: [{ id: 'l', name: 'L', phase: 'setup', shapes: [mixed] }] }),
+    )
+    expect(created.statusCode).toBe(201)
+    expect(created.json().layers[0].shapes[0]).toEqual(arrow('m'))
+    expect((await post(strategy({ mapId: 40000 }))).statusCode).toBe(400)
+    expect((await post(strategy({ linkedClusterId: 3000000000 }))).statusCode).toBe(400)
+    const big = await app().inject({
+      method: 'GET',
+      url: '/playbook/3000000000',
+      cookies: { access_token: token },
+    })
+    expect(big.statusCode).toBe(400)
+  })
+})

@@ -10114,6 +10114,3274 @@
           }
         }
       }
+    },
+    "/teams/{id}/playbook": {
+      "get": {
+        "tags": [
+          "playbook"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "attack"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "side",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "teamId",
+                      "mapId",
+                      "side",
+                      "title",
+                      "sharedWithPlayers",
+                      "linkedClusterId",
+                      "layers",
+                      "shapes",
+                      "updatedAt"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "teamId": {
+                        "type": "integer"
+                      },
+                      "mapId": {
+                        "type": "integer"
+                      },
+                      "side": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "attack"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "defense"
+                            ]
+                          }
+                        ]
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "sharedWithPlayers": {
+                        "type": "boolean"
+                      },
+                      "linkedClusterId": {
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "layers": {
+                        "type": "integer"
+                      },
+                      "shapes": {
+                        "type": "integer"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "playbook"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "mapId",
+                  "side",
+                  "title",
+                  "notes",
+                  "layers",
+                  "linkedClusterId",
+                  "sharedWithPlayers"
+                ],
+                "properties": {
+                  "mapId": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "side": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "attack"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "defense"
+                        ]
+                      }
+                    ]
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 5000,
+                    "default": ""
+                  },
+                  "layers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "phase",
+                        "visible",
+                        "shapes"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 60
+                        },
+                        "phase": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "setup"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "execute"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "post_plant"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "retake"
+                              ]
+                            }
+                          ]
+                        },
+                        "visible": {
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "shapes": {
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "points",
+                                  "color",
+                                  "width"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "path"
+                                    ]
+                                  },
+                                  "points": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "minItems": 2,
+                                    "maxItems": 2000
+                                  },
+                                  "color": {
+                                    "type": "string",
+                                    "pattern": "^#[0-9a-fA-F]{6}$"
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "minimum": 0.5,
+                                    "maximum": 20
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "from",
+                                  "to",
+                                  "color"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "arrow"
+                                    ]
+                                  },
+                                  "from": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "to": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "color": {
+                                    "type": "string",
+                                    "pattern": "^#[0-9a-fA-F]{6}$"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "at",
+                                  "agentId",
+                                  "label"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "marker"
+                                    ]
+                                  },
+                                  "at": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "agentId": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "nullable": true
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "maxLength": 40
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "points",
+                                  "color",
+                                  "opacity"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "area"
+                                    ]
+                                  },
+                                  "points": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "minItems": 3,
+                                    "maxItems": 500
+                                  },
+                                  "color": {
+                                    "type": "string",
+                                    "pattern": "^#[0-9a-fA-F]{6}$"
+                                  },
+                                  "opacity": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "at",
+                                  "text"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "text"
+                                    ]
+                                  },
+                                  "at": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "text": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "maxItems": 2000
+                        }
+                      }
+                    },
+                    "maxItems": 12
+                  },
+                  "linkedClusterId": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "nullable": true
+                  },
+                  "sharedWithPlayers": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "teamId",
+                    "mapId",
+                    "side",
+                    "title",
+                    "notes",
+                    "layers",
+                    "linkedClusterId",
+                    "sharedWithPlayers",
+                    "updatedAt"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "teamId": {
+                      "type": "integer"
+                    },
+                    "mapId": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "side": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "attack"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "defense"
+                          ]
+                        }
+                      ]
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "notes": {
+                      "type": "string",
+                      "maxLength": 5000,
+                      "default": ""
+                    },
+                    "layers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "phase",
+                          "visible",
+                          "shapes"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 60
+                          },
+                          "phase": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "setup"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "execute"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "post_plant"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "retake"
+                                ]
+                              }
+                            ]
+                          },
+                          "visible": {
+                            "type": "boolean",
+                            "default": true
+                          },
+                          "shapes": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "points",
+                                    "color",
+                                    "width"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "path"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "required": [
+                                          "x",
+                                          "y"
+                                        ],
+                                        "properties": {
+                                          "x": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          },
+                                          "y": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          }
+                                        }
+                                      },
+                                      "minItems": 2,
+                                      "maxItems": 2000
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "minimum": 0.5,
+                                      "maximum": 20
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "from",
+                                    "to",
+                                    "color"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "arrow"
+                                      ]
+                                    },
+                                    "from": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "to": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "at",
+                                    "agentId",
+                                    "label"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "marker"
+                                      ]
+                                    },
+                                    "at": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "agentId": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "nullable": true
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "maxLength": 40
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "points",
+                                    "color",
+                                    "opacity"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "area"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "required": [
+                                          "x",
+                                          "y"
+                                        ],
+                                        "properties": {
+                                          "x": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          },
+                                          "y": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          }
+                                        }
+                                      },
+                                      "minItems": 3,
+                                      "maxItems": 500
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    },
+                                    "opacity": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "at",
+                                    "text"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "text"
+                                      ]
+                                    },
+                                    "at": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 200
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "maxItems": 2000
+                          }
+                        }
+                      },
+                      "maxItems": 12
+                    },
+                    "linkedClusterId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "nullable": true
+                    },
+                    "sharedWithPlayers": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playbook/{id}": {
+      "get": {
+        "tags": [
+          "playbook"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "teamId",
+                    "mapId",
+                    "side",
+                    "title",
+                    "notes",
+                    "layers",
+                    "linkedClusterId",
+                    "sharedWithPlayers",
+                    "updatedAt"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "teamId": {
+                      "type": "integer"
+                    },
+                    "mapId": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "side": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "attack"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "defense"
+                          ]
+                        }
+                      ]
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "notes": {
+                      "type": "string",
+                      "maxLength": 5000,
+                      "default": ""
+                    },
+                    "layers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "phase",
+                          "visible",
+                          "shapes"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 60
+                          },
+                          "phase": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "setup"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "execute"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "post_plant"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "retake"
+                                ]
+                              }
+                            ]
+                          },
+                          "visible": {
+                            "type": "boolean",
+                            "default": true
+                          },
+                          "shapes": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "points",
+                                    "color",
+                                    "width"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "path"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "required": [
+                                          "x",
+                                          "y"
+                                        ],
+                                        "properties": {
+                                          "x": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          },
+                                          "y": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          }
+                                        }
+                                      },
+                                      "minItems": 2,
+                                      "maxItems": 2000
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "minimum": 0.5,
+                                      "maximum": 20
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "from",
+                                    "to",
+                                    "color"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "arrow"
+                                      ]
+                                    },
+                                    "from": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "to": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "at",
+                                    "agentId",
+                                    "label"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "marker"
+                                      ]
+                                    },
+                                    "at": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "agentId": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "nullable": true
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "maxLength": 40
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "points",
+                                    "color",
+                                    "opacity"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "area"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "required": [
+                                          "x",
+                                          "y"
+                                        ],
+                                        "properties": {
+                                          "x": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          },
+                                          "y": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          }
+                                        }
+                                      },
+                                      "minItems": 3,
+                                      "maxItems": 500
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    },
+                                    "opacity": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "at",
+                                    "text"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "text"
+                                      ]
+                                    },
+                                    "at": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 200
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "maxItems": 2000
+                          }
+                        }
+                      },
+                      "maxItems": 12
+                    },
+                    "linkedClusterId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "nullable": true
+                    },
+                    "sharedWithPlayers": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "playbook"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "mapId",
+                  "side",
+                  "title",
+                  "notes",
+                  "layers",
+                  "linkedClusterId",
+                  "sharedWithPlayers"
+                ],
+                "properties": {
+                  "mapId": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "side": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "attack"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "defense"
+                        ]
+                      }
+                    ]
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 5000,
+                    "default": ""
+                  },
+                  "layers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "phase",
+                        "visible",
+                        "shapes"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 60
+                        },
+                        "phase": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "setup"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "execute"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "post_plant"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "retake"
+                              ]
+                            }
+                          ]
+                        },
+                        "visible": {
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "shapes": {
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "points",
+                                  "color",
+                                  "width"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "path"
+                                    ]
+                                  },
+                                  "points": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "minItems": 2,
+                                    "maxItems": 2000
+                                  },
+                                  "color": {
+                                    "type": "string",
+                                    "pattern": "^#[0-9a-fA-F]{6}$"
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "minimum": 0.5,
+                                    "maximum": 20
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "from",
+                                  "to",
+                                  "color"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "arrow"
+                                    ]
+                                  },
+                                  "from": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "to": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "color": {
+                                    "type": "string",
+                                    "pattern": "^#[0-9a-fA-F]{6}$"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "at",
+                                  "agentId",
+                                  "label"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "marker"
+                                    ]
+                                  },
+                                  "at": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "agentId": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "nullable": true
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "maxLength": 40
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "points",
+                                  "color",
+                                  "opacity"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "area"
+                                    ]
+                                  },
+                                  "points": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "minItems": 3,
+                                    "maxItems": 500
+                                  },
+                                  "color": {
+                                    "type": "string",
+                                    "pattern": "^#[0-9a-fA-F]{6}$"
+                                  },
+                                  "opacity": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "at",
+                                  "text"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "text"
+                                    ]
+                                  },
+                                  "at": {
+                                    "type": "object",
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "minimum": -0.1,
+                                        "maximum": 1.1
+                                      }
+                                    }
+                                  },
+                                  "text": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "maxItems": 2000
+                        }
+                      }
+                    },
+                    "maxItems": 12
+                  },
+                  "linkedClusterId": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "nullable": true
+                  },
+                  "sharedWithPlayers": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "teamId",
+                    "mapId",
+                    "side",
+                    "title",
+                    "notes",
+                    "layers",
+                    "linkedClusterId",
+                    "sharedWithPlayers",
+                    "updatedAt"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "teamId": {
+                      "type": "integer"
+                    },
+                    "mapId": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "side": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "attack"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "defense"
+                          ]
+                        }
+                      ]
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "notes": {
+                      "type": "string",
+                      "maxLength": 5000,
+                      "default": ""
+                    },
+                    "layers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "phase",
+                          "visible",
+                          "shapes"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 60
+                          },
+                          "phase": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "setup"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "execute"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "post_plant"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "retake"
+                                ]
+                              }
+                            ]
+                          },
+                          "visible": {
+                            "type": "boolean",
+                            "default": true
+                          },
+                          "shapes": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "points",
+                                    "color",
+                                    "width"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "path"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "required": [
+                                          "x",
+                                          "y"
+                                        ],
+                                        "properties": {
+                                          "x": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          },
+                                          "y": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          }
+                                        }
+                                      },
+                                      "minItems": 2,
+                                      "maxItems": 2000
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "minimum": 0.5,
+                                      "maximum": 20
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "from",
+                                    "to",
+                                    "color"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "arrow"
+                                      ]
+                                    },
+                                    "from": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "to": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "at",
+                                    "agentId",
+                                    "label"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "marker"
+                                      ]
+                                    },
+                                    "at": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "agentId": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "nullable": true
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "maxLength": 40
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "points",
+                                    "color",
+                                    "opacity"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "area"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "required": [
+                                          "x",
+                                          "y"
+                                        ],
+                                        "properties": {
+                                          "x": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          },
+                                          "y": {
+                                            "type": "number",
+                                            "minimum": -0.1,
+                                            "maximum": 1.1
+                                          }
+                                        }
+                                      },
+                                      "minItems": 3,
+                                      "maxItems": 500
+                                    },
+                                    "color": {
+                                      "type": "string",
+                                      "pattern": "^#[0-9a-fA-F]{6}$"
+                                    },
+                                    "opacity": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "at",
+                                    "text"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "text"
+                                      ]
+                                    },
+                                    "at": {
+                                      "type": "object",
+                                      "required": [
+                                        "x",
+                                        "y"
+                                      ],
+                                      "properties": {
+                                        "x": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        },
+                                        "y": {
+                                          "type": "number",
+                                          "minimum": -0.1,
+                                          "maximum": 1.1
+                                        }
+                                      }
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 200
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "maxItems": 2000
+                          }
+                        }
+                      },
+                      "maxItems": 12
+                    },
+                    "linkedClusterId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "nullable": true
+                    },
+                    "sharedWithPlayers": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "playbook"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Default Response"
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -1,5 +1,7 @@
 import { sql } from 'drizzle-orm'
-import { index, integer, pgSchema, serial, text, timestamp } from 'drizzle-orm/pg-core'
+import { boolean, index, integer, jsonb, pgSchema, serial, text, timestamp } from 'drizzle-orm/pg-core'
+
+import type { DrawingLayer } from '../../modules/playbook/schemas.js'
 
 export const app = pgSchema('app')
 
@@ -32,4 +34,31 @@ export const refreshTokens = app.table(
       .default(sql`now()`),
   },
   (table) => [index('refresh_tokens_user_idx').on(table.userId)],
+)
+
+export const playbookSide = app.enum('playbook_side', ['attack', 'defense'])
+
+export const playbookStrategies = app.table(
+  'playbook_strategies',
+  {
+    id: serial().primaryKey(),
+    teamId: integer('team_id').notNull(),
+    mapId: integer('map_id').notNull(),
+    side: playbookSide().notNull(),
+    title: text().notNull(),
+    notes: text().notNull().default(''),
+    layers: jsonb().$type<DrawingLayer[]>().notNull(),
+    linkedClusterId: integer('linked_cluster_id'),
+    sharedWithPlayers: boolean('shared_with_players').notNull().default(false),
+    createdBy: integer('created_by')
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp('updated_at', { withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (table) => [index('playbook_team_map_idx').on(table.teamId, table.mapId)],
 )

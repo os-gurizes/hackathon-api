@@ -15,6 +15,7 @@ import { healthRoutes } from './modules/health/routes.js'
 import { heatmapRoutes } from './modules/heatmap/routes.js'
 import { insightRoutes } from './modules/insights/routes.js'
 import { matchRoutes } from './modules/matches/routes.js'
+import { playbookRoutes } from './modules/playbook/routes.js'
 import { playerRoutes } from './modules/players/routes.js'
 import { statsRoutes } from './modules/stats/routes.js'
 import { teamRoutes } from './modules/teams/routes.js'
@@ -87,6 +88,7 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
     await data.register(heatmapRoutes)
     await data.register(analysisRoutes)
     await data.register(insightRoutes)
+    await data.register(playbookRoutes)
   })
 
   return app

@@ -13,7 +13,7 @@ export const hashToken = (token: string): string => createHash('sha256').update(
 export const newRefreshToken = (): string => randomBytes(32).toString('base64url')
 
 function baseCookie(config: Config): CookieSerializeOptions {
-  return { httpOnly: true, sameSite: 'lax', secure: config.NODE_ENV === 'production' }
+  return { httpOnly: true, sameSite: 'lax', secure: config.COOKIE_SECURE ?? config.NODE_ENV === 'production' }
 }
 
 export function accessCookie(config: Config): CookieSerializeOptions {

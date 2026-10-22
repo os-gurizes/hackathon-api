@@ -3,6 +3,8 @@ import { asc, eq } from 'drizzle-orm'
 
 import { players, teams } from '../../db/analytics/schema.js'
 import { users } from '../../db/app/schema.js'
+import { revokeAllRefreshTokens } from '../auth/repository.js'
+import type { UserId } from '../../shared/ids.js'
 import type { Database } from '../../db/client.js'
 import type { Role } from '../../plugins/auth.js'
 import { AppError, notFound } from '../../shared/errors.js'
@@ -54,12 +56,14 @@ export async function createUser(db: Database, body: CreateUserBody): Promise<Us
   const [row] = await db
     .insert(users)
     .values({ email, passwordHash: await argon2.hash(body.password), ...link })
+    .onConflictDoNothing({ target: users.email })
     .returning(columns)
-  if (!row) throw new AppError('INTERNAL', 'Falha ao criar usuário')
+  if (!row) throw new AppError('CONFLICT', 'E-mail já cadastrado')
   return toView(row)
 }
 
 export async function updateUser(db: Database, id: number, body: UpdateUserBody): Promise<UserView> {
+  if (Object.keys(body).length === 0) throw new AppError('VALIDATION', 'Nada para atualizar')
   const [current] = await db.select(columns).from(users).where(eq(users.id, id))
   if (!current) throw notFound('Usuário')
   const link: Link = {
@@ -74,5 +78,7 @@ export async function updateUser(db: Database, id: number, body: UpdateUserBody)
     .where(eq(users.id, id))
     .returning(columns)
   if (!row) throw notFound('Usuário')
+  if (body.password !== undefined || link.role !== current.role)
+    await revokeAllRefreshTokens(db, id as UserId)
   return toView(row)
 }

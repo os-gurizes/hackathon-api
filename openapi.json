@@ -977,8 +977,7 @@
                     "minimum": 1,
                     "nullable": true
                   }
-                },
-                "minProperties": 1
+                }
               }
             }
           }
@@ -3637,7 +3636,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -3659,7 +3658,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -3892,7 +3891,7 @@
                       "required": [
                         "matches",
                         "rounds",
-                        "winRate",
+                        "roundWinRate",
                         "acs",
                         "kd",
                         "kills",
@@ -3914,7 +3913,7 @@
                         "rounds": {
                           "type": "integer"
                         },
-                        "winRate": {
+                        "roundWinRate": {
                           "type": "number",
                           "minimum": 0,
                           "maximum": 1
@@ -4181,7 +4180,7 @@
                       "required": [
                         "matches",
                         "rounds",
-                        "winRate",
+                        "roundWinRate",
                         "acs",
                         "kd",
                         "kills",
@@ -4203,7 +4202,7 @@
                         "rounds": {
                           "type": "integer"
                         },
-                        "winRate": {
+                        "roundWinRate": {
                           "type": "number",
                           "minimum": 0,
                           "maximum": 1
@@ -4286,7 +4285,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4308,7 +4307,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -4395,7 +4394,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4417,7 +4416,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -4500,7 +4499,7 @@
                             "required": [
                               "matches",
                               "rounds",
-                              "winRate",
+                              "roundWinRate",
                               "acs",
                               "kd",
                               "kills",
@@ -4522,7 +4521,7 @@
                               "rounds": {
                                 "type": "integer"
                               },
-                              "winRate": {
+                              "roundWinRate": {
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 1
@@ -5094,7 +5093,7 @@
                         "required": [
                           "matches",
                           "rounds",
-                          "winRate",
+                          "roundWinRate",
                           "acs",
                           "kd",
                           "kills",
@@ -5116,7 +5115,7 @@
                           "rounds": {
                             "type": "integer"
                           },
-                          "winRate": {
+                          "roundWinRate": {
                             "type": "number",
                             "minimum": 0,
                             "maximum": 1

@@ -26,6 +26,16 @@ export class AppError extends Error {
   }
 }
 
+export function codeForStatus(status: number): ErrorCode {
+  const byStatus: Partial<Record<number, ErrorCode>> = {
+    401: 'UNAUTHORIZED',
+    403: 'FORBIDDEN',
+    404: 'NOT_FOUND',
+    409: 'CONFLICT',
+  }
+  return byStatus[status] ?? (status >= 500 ? 'INTERNAL' : 'VALIDATION')
+}
+
 export const notFound = (resource: string): AppError =>
   new AppError('NOT_FOUND', `${resource} não encontrado`)
 export const forbidden = (): AppError => new AppError('FORBIDDEN', 'Acesso negado')

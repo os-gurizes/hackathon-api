@@ -977,8 +977,7 @@
                     "minimum": 1,
                     "nullable": true
                   }
-                },
-                "minProperties": 1
+                }
               }
             }
           }

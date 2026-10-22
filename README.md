@@ -57,4 +57,4 @@ Todas as rotas, exceto login, refresh e `/health`, exigem login. A referência c
 
 ## Desempenho
 
-Respostas `GET` levam `ETag` fraco e `Cache-Control: private, no-cache`. Com o dado igual, o front recebe `304`. No benchmark com o banco completo (10 conexões), a rota mais pesada tem p99 de 57 ms.
+Respostas `GET` e `HEAD` com status 200 levam `ETag` fraco, `Vary: Cookie` e `Cache-Control: private, no-cache`. Erros e escritas não recebem ETag. Com o dado igual, o front recebe `304`. No benchmark com o banco completo (10 conexões), a rota mais pesada tem p99 de 57 ms.

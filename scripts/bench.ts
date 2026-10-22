@@ -18,6 +18,7 @@ const cookie = login.headers
 
 async function first<T>(path: string, select: (body: unknown) => T): Promise<T> {
   const response = await fetch(`${base}${path}`, { headers: { cookie } })
+  if (!response.ok) throw new Error(`${path} respondeu ${response.status}`)
   return select(await response.json())
 }
 

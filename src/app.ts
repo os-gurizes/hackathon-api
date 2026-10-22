@@ -1,6 +1,5 @@
 import cookie from '@fastify/cookie'
 import cors from '@fastify/cors'
-import etag from '@fastify/etag'
 import swagger from '@fastify/swagger'
 import swaggerUi from '@fastify/swagger-ui'
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
@@ -21,6 +20,7 @@ import { playerRoutes } from './modules/players/routes.js'
 import { statsRoutes } from './modules/stats/routes.js'
 import { teamRoutes } from './modules/teams/routes.js'
 import { authPlugin } from './plugins/auth.js'
+import { httpCachePlugin } from './plugins/http-cache.js'
 import { AppError, codeForStatus, errorBody } from './shared/errors.js'
 
 declare module 'fastify' {
@@ -51,12 +51,7 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
 
   await app.register(cors, { origin: config.CORS_ORIGIN, credentials: true })
   await app.register(cookie, { secret: config.COOKIE_SECRET })
-  await app.register(etag, { weak: true })
-  app.addHook('onSend', async (request, reply) => {
-    if (request.method === 'GET' && !reply.hasHeader('cache-control')) {
-      reply.header('cache-control', 'private, no-cache')
-    }
-  })
+  await app.register(httpCachePlugin)
   await app.register(swagger, {
     openapi: {
       info: { title: 'Valorant Analytics API', version: '0.1.0' },

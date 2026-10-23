@@ -41,6 +41,20 @@ export async function canViewTeamAnalytics(db: Database, viewer: Viewer, teamId:
   return viewer.playerId !== null && playedFor(db, viewer.playerId, teamId)
 }
 
+export type PlaybookAccess = 'all' | 'shared' | 'none'
+
+export async function playbookAccess(db: Database, viewer: Viewer, teamId: number): Promise<PlaybookAccess> {
+  if (canEditTeam(viewer, teamId)) return 'all'
+  if (
+    viewer.role === 'player' &&
+    viewer.playerId !== null &&
+    (await playedFor(db, viewer.playerId, teamId))
+  ) {
+    return 'shared'
+  }
+  return 'none'
+}
+
 export function canEditTeam(viewer: Viewer, teamId: number): boolean {
   return viewer.role === 'admin' || (viewer.role === 'coach' && viewer.teamId === teamId)
 }

@@ -14,15 +14,15 @@ A API lê o schema `analytics`, que o ETL preenche (`vstats all <dataset.zip>`).
 
 ## Scripts
 
-| Script | O que faz |
-|---|---|
-| `npm run dev` | servidor com reload |
-| `npm run build` / `npm start` | build e execução |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm test` | testes (cria o banco `vstats_api_test` a partir de `test/fixtures/analytics.sql`) |
-| `npm run format` | Prettier |
-| `npm run db:pull` | regenera os tipos do schema `analytics` a partir do banco |
-| `npm run openapi` | exporta `openapi.json` para o front gerar o cliente |
+| Script                        | O que faz                                                                         |
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| `npm run dev`                 | servidor com reload                                                               |
+| `npm run build` / `npm start` | build e execução                                                                  |
+| `npm run typecheck`           | `tsc --noEmit`                                                                    |
+| `npm test`                    | testes (cria o banco `vstats_api_test` a partir de `test/fixtures/analytics.sql`) |
+| `npm run format`              | Prettier                                                                          |
+| `npm run db:pull`             | regenera os tipos do schema `analytics` a partir do banco                         |
+| `npm run openapi`             | exporta `openapi.json` para o front gerar o cliente                               |
 
 ## Fixture de testes
 

@@ -1128,6 +1128,2292 @@
           }
         }
       }
+    },
+    "/tournaments": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "slug",
+                      "name",
+                      "stages"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "stages": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "slug",
+                            "name",
+                            "order",
+                            "matches"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "order": {
+                              "type": "integer"
+                            },
+                            "matches": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tournaments/{id}/standings": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "stage",
+                      "standings"
+                    ],
+                    "properties": {
+                      "stage": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "standings": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "team",
+                            "seriesPlayed",
+                            "seriesWon",
+                            "mapsWon",
+                            "mapsLost",
+                            "roundDiff"
+                          ],
+                          "properties": {
+                            "team": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "slug",
+                                "displayName"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "slug": {
+                                  "type": "string"
+                                },
+                                "displayName": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "seriesPlayed": {
+                              "type": "integer"
+                            },
+                            "seriesWon": {
+                              "type": "integer"
+                            },
+                            "mapsWon": {
+                              "type": "integer"
+                            },
+                            "mapsLost": {
+                              "type": "integer"
+                            },
+                            "roundDiff": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/series/{id}": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "number",
+                    "stage",
+                    "teamA",
+                    "teamB",
+                    "winner",
+                    "maps"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "number": {
+                      "type": "integer"
+                    },
+                    "stage": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "tournament"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "tournament": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "teamA": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "slug",
+                        "displayName"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "teamB": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "slug",
+                        "displayName"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "winner": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "slug",
+                        "displayName"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    },
+                    "maps": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "matchId",
+                          "game",
+                          "map",
+                          "scoreA",
+                          "scoreB",
+                          "winnerTeamId"
+                        ],
+                        "properties": {
+                          "matchId": {
+                            "type": "integer"
+                          },
+                          "game": {
+                            "type": "string"
+                          },
+                          "map": {
+                            "type": "string"
+                          },
+                          "scoreA": {
+                            "type": "integer"
+                          },
+                          "scoreB": {
+                            "type": "integer"
+                          },
+                          "winnerTeamId": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "slug",
+                      "name",
+                      "matches",
+                      "silhouetteQuality"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "matches": {
+                        "type": "integer"
+                      },
+                      "silhouetteQuality": {
+                        "anyOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "ok"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "low"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "nullable": true,
+                            "enum": [
+                              null
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/{id}": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "slug",
+                    "name",
+                    "viewBox",
+                    "silhouette",
+                    "silhouetteQuality",
+                    "sites",
+                    "zones"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "viewBox": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 4,
+                      "maxItems": 4
+                    },
+                    "silhouette": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "silhouetteQuality": {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "ok"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "low"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "nullable": true,
+                          "enum": [
+                            null
+                          ]
+                        }
+                      ]
+                    },
+                    "sites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "site",
+                          "at",
+                          "plants"
+                        ],
+                        "properties": {
+                          "site": {
+                            "type": "string"
+                          },
+                          "at": {
+                            "type": "object",
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "plants": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "zones": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "region",
+                          "superRegion",
+                          "label",
+                          "path"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "region": {
+                            "type": "string"
+                          },
+                          "superRegion": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "object",
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "role",
+                      "abilities"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "abilities": {
+                        "type": "object",
+                        "required": [
+                          "grenade",
+                          "ability1",
+                          "ability2",
+                          "ultimate"
+                        ],
+                        "properties": {
+                          "grenade": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ability1": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ability2": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ultimate": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weapons": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "category",
+                      "cost",
+                      "isArmor"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "cost": {
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "isArmor": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches": {
+      "get": {
+        "tags": [
+          "matches"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "player",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "maxLength": 100
+            },
+            "in": "query",
+            "name": "cursor",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "in": "query",
+            "name": "limit",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "items",
+                    "nextCursor"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "seriesId",
+                          "game",
+                          "playedOn",
+                          "startedAt",
+                          "durationMs",
+                          "tournament",
+                          "stage",
+                          "map",
+                          "red",
+                          "blue",
+                          "winnerTeamId"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "seriesId": {
+                            "type": "integer"
+                          },
+                          "game": {
+                            "type": "string"
+                          },
+                          "playedOn": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "startedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "durationMs": {
+                            "type": "integer"
+                          },
+                          "tournament": {
+                            "type": "string"
+                          },
+                          "stage": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "map": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "slug",
+                              "name"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "red": {
+                            "type": "object",
+                            "required": [
+                              "team",
+                              "score"
+                            ],
+                            "properties": {
+                              "team": {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "slug",
+                                  "displayName"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "integer"
+                                  },
+                                  "slug": {
+                                    "type": "string"
+                                  },
+                                  "displayName": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "score": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "blue": {
+                            "type": "object",
+                            "required": [
+                              "team",
+                              "score"
+                            ],
+                            "properties": {
+                              "team": {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "slug",
+                                  "displayName"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "integer"
+                                  },
+                                  "slug": {
+                                    "type": "string"
+                                  },
+                                  "displayName": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "score": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "winnerTeamId": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches/{id}": {
+      "get": {
+        "tags": [
+          "matches"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "seriesId",
+                    "game",
+                    "playedOn",
+                    "startedAt",
+                    "durationMs",
+                    "tournament",
+                    "stage",
+                    "map",
+                    "red",
+                    "blue",
+                    "winnerTeamId",
+                    "gameVersion",
+                    "scoreboard"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "seriesId": {
+                      "type": "integer"
+                    },
+                    "game": {
+                      "type": "string"
+                    },
+                    "playedOn": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "durationMs": {
+                      "type": "integer"
+                    },
+                    "tournament": {
+                      "type": "string"
+                    },
+                    "stage": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "map": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "slug",
+                        "name"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "red": {
+                      "type": "object",
+                      "required": [
+                        "team",
+                        "score"
+                      ],
+                      "properties": {
+                        "team": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "slug",
+                            "displayName"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "displayName": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "score": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "blue": {
+                      "type": "object",
+                      "required": [
+                        "team",
+                        "score"
+                      ],
+                      "properties": {
+                        "team": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "slug",
+                            "displayName"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "displayName": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "score": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "winnerTeamId": {
+                      "type": "integer"
+                    },
+                    "gameVersion": {
+                      "type": "string"
+                    },
+                    "scoreboard": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "player",
+                          "teamId",
+                          "agent",
+                          "rounds",
+                          "acs",
+                          "kills",
+                          "deaths",
+                          "assists",
+                          "kd",
+                          "adr",
+                          "headshotRate",
+                          "kast",
+                          "firstKills",
+                          "firstDeaths",
+                          "plants",
+                          "defuses"
+                        ],
+                        "properties": {
+                          "player": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "gameName",
+                              "tagLine"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "gameName": {
+                                "type": "string"
+                              },
+                              "tagLine": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "teamId": {
+                            "type": "integer"
+                          },
+                          "agent": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name",
+                              "role"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          },
+                          "rounds": {
+                            "type": "integer"
+                          },
+                          "acs": {
+                            "type": "number"
+                          },
+                          "kills": {
+                            "type": "integer"
+                          },
+                          "deaths": {
+                            "type": "integer"
+                          },
+                          "assists": {
+                            "type": "integer"
+                          },
+                          "kd": {
+                            "type": "number"
+                          },
+                          "adr": {
+                            "type": "number"
+                          },
+                          "headshotRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "kast": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "firstKills": {
+                            "type": "integer"
+                          },
+                          "firstDeaths": {
+                            "type": "integer"
+                          },
+                          "plants": {
+                            "type": "integer"
+                          },
+                          "defuses": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches/{id}/rounds": {
+      "get": {
+        "tags": [
+          "matches"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "number",
+                      "winnerTeamId",
+                      "winnerSide",
+                      "attackTeamId",
+                      "defenseTeamId",
+                      "resultCode",
+                      "plantSite",
+                      "plantTimeMs",
+                      "buys",
+                      "winProbability"
+                    ],
+                    "properties": {
+                      "number": {
+                        "type": "integer"
+                      },
+                      "winnerTeamId": {
+                        "type": "integer"
+                      },
+                      "winnerSide": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "attack"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "defense"
+                            ]
+                          }
+                        ]
+                      },
+                      "attackTeamId": {
+                        "type": "integer"
+                      },
+                      "defenseTeamId": {
+                        "type": "integer"
+                      },
+                      "resultCode": {
+                        "type": "string"
+                      },
+                      "plantSite": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "plantTimeMs": {
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "buys": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "teamId",
+                            "buyType",
+                            "loadout"
+                          ],
+                          "properties": {
+                            "teamId": {
+                              "type": "integer"
+                            },
+                            "buyType": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "pistol"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "eco"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "semi_eco"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "half_buy"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "full_buy"
+                                  ]
+                                }
+                              ]
+                            },
+                            "loadout": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "winProbability": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "tMs",
+                            "event",
+                            "attack"
+                          ],
+                          "properties": {
+                            "tMs": {
+                              "type": "integer"
+                            },
+                            "event": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "start"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "kill"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "plant"
+                                  ]
+                                }
+                              ]
+                            },
+                            "attack": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches/{id}/rounds/{n}/replay": {
+      "get": {
+        "tags": [
+          "matches"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "in": "path",
+            "name": "n",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "matchId",
+                    "number",
+                    "mapId",
+                    "winnerTeamId",
+                    "resultCode",
+                    "players",
+                    "events"
+                  ],
+                  "properties": {
+                    "matchId": {
+                      "type": "integer"
+                    },
+                    "number": {
+                      "type": "integer"
+                    },
+                    "mapId": {
+                      "type": "integer"
+                    },
+                    "winnerTeamId": {
+                      "type": "integer"
+                    },
+                    "resultCode": {
+                      "type": "string"
+                    },
+                    "players": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "player",
+                          "teamId",
+                          "side",
+                          "agent",
+                          "loadout"
+                        ],
+                        "properties": {
+                          "player": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "gameName",
+                              "tagLine"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "gameName": {
+                                "type": "string"
+                              },
+                              "tagLine": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "teamId": {
+                            "type": "integer"
+                          },
+                          "side": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "attack"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "defense"
+                                ]
+                              }
+                            ]
+                          },
+                          "agent": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name",
+                              "role"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          },
+                          "loadout": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "tMs",
+                              "killerId",
+                              "victimId",
+                              "kind",
+                              "damageType",
+                              "weaponId",
+                              "abilitySlot",
+                              "isFirstKill",
+                              "isTrade",
+                              "killerAt",
+                              "victimAt",
+                              "assistIds",
+                              "positions"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "kill"
+                                ]
+                              },
+                              "tMs": {
+                                "type": "integer"
+                              },
+                              "killerId": {
+                                "type": "integer",
+                                "nullable": true
+                              },
+                              "victimId": {
+                                "type": "integer"
+                              },
+                              "kind": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "enemy"
+                                    ]
+                                  },
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "team"
+                                    ]
+                                  },
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "self"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "damageType": {
+                                "type": "string"
+                              },
+                              "weaponId": {
+                                "type": "integer",
+                                "nullable": true
+                              },
+                              "abilitySlot": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "isFirstKill": {
+                                "type": "boolean"
+                              },
+                              "isTrade": {
+                                "type": "boolean"
+                              },
+                              "killerAt": {
+                                "type": "object",
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "nullable": true
+                              },
+                              "victimAt": {
+                                "type": "object",
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "nullable": true
+                              },
+                              "assistIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "integer"
+                                }
+                              },
+                              "positions": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "required": [
+                                    "playerId",
+                                    "side",
+                                    "x",
+                                    "y",
+                                    "view"
+                                  ],
+                                  "properties": {
+                                    "playerId": {
+                                      "type": "integer"
+                                    },
+                                    "side": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "enum": [
+                                            "attack"
+                                          ]
+                                        },
+                                        {
+                                          "type": "string",
+                                          "enum": [
+                                            "defense"
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    },
+                                    "view": {
+                                      "type": "number"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "tMs",
+                              "playerId",
+                              "site",
+                              "at"
+                            ],
+                            "properties": {
+                              "type": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "plant"
+                                    ]
+                                  },
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "defuse"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "tMs": {
+                                "type": "integer"
+                              },
+                              "playerId": {
+                                "type": "integer",
+                                "nullable": true
+                              },
+                              "site": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "at": {
+                                "type": "object",
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "nullable": true
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -59,3 +59,8 @@ export async function login(app: App, email: string): Promise<Session> {
   const cookie = (name: string) => response.cookies.find((c) => c.name === name)?.value ?? ''
   return { access: cookie('access_token'), refresh: cookie('refresh_token') }
 }
+
+export async function viewerToken(app: App): Promise<string> {
+  await createUser(app, { email: 'viewer@test.dev', role: 'admin' })
+  return (await login(app, 'viewer@test.dev')).access
+}

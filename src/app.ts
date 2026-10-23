@@ -7,7 +7,10 @@ import Fastify, { type FastifyError, type FastifyInstance } from 'fastify'
 
 import type { Config } from './config.js'
 import type { Database } from './db/client.js'
+import { adminRoutes } from './modules/admin/routes.js'
+import { authRoutes } from './modules/auth/routes.js'
 import { healthRoutes } from './modules/health/routes.js'
+import { authPlugin } from './plugins/auth.js'
 import { AppError, codeForStatus, errorBody } from './shared/errors.js'
 
 declare module 'fastify' {
@@ -62,7 +65,10 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
     reply.status(404).send(errorBody('NOT_FOUND', `Rota não encontrada: ${request.method} ${request.url}`)),
   )
 
+  await app.register(authPlugin)
   await app.register(healthRoutes)
+  await app.register(authRoutes)
+  await app.register(adminRoutes)
 
   return app
 }

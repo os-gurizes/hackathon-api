@@ -7,6 +7,8 @@ API REST que serve os dados calculados pelo ETL ([hackathon-etl](https://github.
 ```
 npm install
 cp .env.example .env    # ajuste os segredos
+npm run db:migrate      # cria o schema app (usuários e sessões)
+SEED_PASSWORD=... npm run seed
 npm run dev
 ```
 

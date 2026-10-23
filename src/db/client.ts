@@ -3,8 +3,9 @@ import pg from 'pg'
 
 import * as analyticsRelations from './analytics/relations.js'
 import * as analytics from './analytics/schema.js'
+import * as app from './app/schema.js'
 
-export const schema = { ...analytics, ...analyticsRelations }
+export const schema = { ...analytics, ...analyticsRelations, ...app }
 
 export type Database = NodePgDatabase<typeof schema>
 

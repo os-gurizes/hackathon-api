@@ -8,10 +8,12 @@ import Fastify, { type FastifyError, type FastifyInstance } from 'fastify'
 import type { Config } from './config.js'
 import type { Database } from './db/client.js'
 import { adminRoutes } from './modules/admin/routes.js'
+import { analysisRoutes } from './modules/analysis/routes.js'
 import { authRoutes } from './modules/auth/routes.js'
 import { catalogRoutes } from './modules/catalog/routes.js'
 import { healthRoutes } from './modules/health/routes.js'
 import { heatmapRoutes } from './modules/heatmap/routes.js'
+import { insightRoutes } from './modules/insights/routes.js'
 import { matchRoutes } from './modules/matches/routes.js'
 import { playerRoutes } from './modules/players/routes.js'
 import { statsRoutes } from './modules/stats/routes.js'
@@ -83,6 +85,8 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
     await data.register(teamRoutes)
     await data.register(statsRoutes)
     await data.register(heatmapRoutes)
+    await data.register(analysisRoutes)
+    await data.register(insightRoutes)
   })
 
   return app

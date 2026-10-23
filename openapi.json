@@ -3414,6 +3414,2734 @@
           }
         }
       }
+    },
+    "/players": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "attack"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "side",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "player",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "agent",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 50
+            },
+            "in": "query",
+            "name": "search",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "acs"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "kd"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "adr"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "kast"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "hs"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "fk"
+                  ]
+                }
+              ],
+              "default": "acs"
+            },
+            "in": "query",
+            "name": "sort",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000,
+              "default": 40
+            },
+            "in": "query",
+            "name": "minRounds",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "maxLength": 100
+            },
+            "in": "query",
+            "name": "cursor",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "in": "query",
+            "name": "limit",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "items",
+                    "nextCursor"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "player",
+                          "stats",
+                          "sortValue"
+                        ],
+                        "properties": {
+                          "player": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "gameName",
+                              "tagLine"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "gameName": {
+                                "type": "string"
+                              },
+                              "tagLine": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "stats": {
+                            "type": "object",
+                            "required": [
+                              "matches",
+                              "rounds",
+                              "roundWinRate",
+                              "acs",
+                              "kd",
+                              "kills",
+                              "deaths",
+                              "assists",
+                              "adr",
+                              "kast",
+                              "headshotRate",
+                              "firstKills",
+                              "firstDeaths",
+                              "clutchWins",
+                              "clutchAttempts",
+                              "multikills"
+                            ],
+                            "properties": {
+                              "matches": {
+                                "type": "integer"
+                              },
+                              "rounds": {
+                                "type": "integer"
+                              },
+                              "roundWinRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "acs": {
+                                "type": "number"
+                              },
+                              "kd": {
+                                "type": "number"
+                              },
+                              "kills": {
+                                "type": "integer"
+                              },
+                              "deaths": {
+                                "type": "integer"
+                              },
+                              "assists": {
+                                "type": "integer"
+                              },
+                              "adr": {
+                                "type": "number"
+                              },
+                              "kast": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "headshotRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "firstKills": {
+                                "type": "integer"
+                              },
+                              "firstDeaths": {
+                                "type": "integer"
+                              },
+                              "clutchWins": {
+                                "type": "integer"
+                              },
+                              "clutchAttempts": {
+                                "type": "integer"
+                              },
+                              "multikills": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "sortValue": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "player",
+                    "teams",
+                    "totals",
+                    "topAgents"
+                  ],
+                  "properties": {
+                    "player": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "gameName",
+                        "tagLine"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "gameName": {
+                          "type": "string"
+                        },
+                        "tagLine": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "teams": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "team",
+                          "matches",
+                          "lastPlayedOn"
+                        ],
+                        "properties": {
+                          "team": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "slug",
+                              "displayName"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "matches": {
+                            "type": "integer"
+                          },
+                          "lastPlayedOn": {
+                            "type": "string",
+                            "format": "date"
+                          }
+                        }
+                      }
+                    },
+                    "totals": {
+                      "type": "object",
+                      "required": [
+                        "matches",
+                        "rounds",
+                        "roundWinRate",
+                        "acs",
+                        "kd",
+                        "kills",
+                        "deaths",
+                        "assists",
+                        "adr",
+                        "kast",
+                        "headshotRate",
+                        "firstKills",
+                        "firstDeaths",
+                        "clutchWins",
+                        "clutchAttempts",
+                        "multikills"
+                      ],
+                      "properties": {
+                        "matches": {
+                          "type": "integer"
+                        },
+                        "rounds": {
+                          "type": "integer"
+                        },
+                        "roundWinRate": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "acs": {
+                          "type": "number"
+                        },
+                        "kd": {
+                          "type": "number"
+                        },
+                        "kills": {
+                          "type": "integer"
+                        },
+                        "deaths": {
+                          "type": "integer"
+                        },
+                        "assists": {
+                          "type": "integer"
+                        },
+                        "adr": {
+                          "type": "number"
+                        },
+                        "kast": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "headshotRate": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "firstKills": {
+                          "type": "integer"
+                        },
+                        "firstDeaths": {
+                          "type": "integer"
+                        },
+                        "clutchWins": {
+                          "type": "integer"
+                        },
+                        "clutchAttempts": {
+                          "type": "integer"
+                        },
+                        "multikills": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "topAgents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "agent",
+                          "matches"
+                        ],
+                        "properties": {
+                          "agent": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name",
+                              "role"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          },
+                          "matches": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}/stats": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "attack"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "side",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "agent",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "overall",
+                    "byMap",
+                    "byAgent",
+                    "bySide",
+                    "kdPerMatch"
+                  ],
+                  "properties": {
+                    "overall": {
+                      "type": "object",
+                      "required": [
+                        "matches",
+                        "rounds",
+                        "roundWinRate",
+                        "acs",
+                        "kd",
+                        "kills",
+                        "deaths",
+                        "assists",
+                        "adr",
+                        "kast",
+                        "headshotRate",
+                        "firstKills",
+                        "firstDeaths",
+                        "clutchWins",
+                        "clutchAttempts",
+                        "multikills"
+                      ],
+                      "properties": {
+                        "matches": {
+                          "type": "integer"
+                        },
+                        "rounds": {
+                          "type": "integer"
+                        },
+                        "roundWinRate": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "acs": {
+                          "type": "number"
+                        },
+                        "kd": {
+                          "type": "number"
+                        },
+                        "kills": {
+                          "type": "integer"
+                        },
+                        "deaths": {
+                          "type": "integer"
+                        },
+                        "assists": {
+                          "type": "integer"
+                        },
+                        "adr": {
+                          "type": "number"
+                        },
+                        "kast": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "headshotRate": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "firstKills": {
+                          "type": "integer"
+                        },
+                        "firstDeaths": {
+                          "type": "integer"
+                        },
+                        "clutchWins": {
+                          "type": "integer"
+                        },
+                        "clutchAttempts": {
+                          "type": "integer"
+                        },
+                        "multikills": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "byMap": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "map",
+                          "stats"
+                        ],
+                        "properties": {
+                          "map": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "slug",
+                              "name"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "stats": {
+                            "type": "object",
+                            "required": [
+                              "matches",
+                              "rounds",
+                              "roundWinRate",
+                              "acs",
+                              "kd",
+                              "kills",
+                              "deaths",
+                              "assists",
+                              "adr",
+                              "kast",
+                              "headshotRate",
+                              "firstKills",
+                              "firstDeaths",
+                              "clutchWins",
+                              "clutchAttempts",
+                              "multikills"
+                            ],
+                            "properties": {
+                              "matches": {
+                                "type": "integer"
+                              },
+                              "rounds": {
+                                "type": "integer"
+                              },
+                              "roundWinRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "acs": {
+                                "type": "number"
+                              },
+                              "kd": {
+                                "type": "number"
+                              },
+                              "kills": {
+                                "type": "integer"
+                              },
+                              "deaths": {
+                                "type": "integer"
+                              },
+                              "assists": {
+                                "type": "integer"
+                              },
+                              "adr": {
+                                "type": "number"
+                              },
+                              "kast": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "headshotRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "firstKills": {
+                                "type": "integer"
+                              },
+                              "firstDeaths": {
+                                "type": "integer"
+                              },
+                              "clutchWins": {
+                                "type": "integer"
+                              },
+                              "clutchAttempts": {
+                                "type": "integer"
+                              },
+                              "multikills": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "byAgent": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "agent",
+                          "stats"
+                        ],
+                        "properties": {
+                          "agent": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name",
+                              "role"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          },
+                          "stats": {
+                            "type": "object",
+                            "required": [
+                              "matches",
+                              "rounds",
+                              "roundWinRate",
+                              "acs",
+                              "kd",
+                              "kills",
+                              "deaths",
+                              "assists",
+                              "adr",
+                              "kast",
+                              "headshotRate",
+                              "firstKills",
+                              "firstDeaths",
+                              "clutchWins",
+                              "clutchAttempts",
+                              "multikills"
+                            ],
+                            "properties": {
+                              "matches": {
+                                "type": "integer"
+                              },
+                              "rounds": {
+                                "type": "integer"
+                              },
+                              "roundWinRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "acs": {
+                                "type": "number"
+                              },
+                              "kd": {
+                                "type": "number"
+                              },
+                              "kills": {
+                                "type": "integer"
+                              },
+                              "deaths": {
+                                "type": "integer"
+                              },
+                              "assists": {
+                                "type": "integer"
+                              },
+                              "adr": {
+                                "type": "number"
+                              },
+                              "kast": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "headshotRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "firstKills": {
+                                "type": "integer"
+                              },
+                              "firstDeaths": {
+                                "type": "integer"
+                              },
+                              "clutchWins": {
+                                "type": "integer"
+                              },
+                              "clutchAttempts": {
+                                "type": "integer"
+                              },
+                              "multikills": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "bySide": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "side",
+                          "stats"
+                        ],
+                        "properties": {
+                          "side": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "attack"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "defense"
+                                ]
+                              }
+                            ]
+                          },
+                          "stats": {
+                            "type": "object",
+                            "required": [
+                              "matches",
+                              "rounds",
+                              "roundWinRate",
+                              "acs",
+                              "kd",
+                              "kills",
+                              "deaths",
+                              "assists",
+                              "adr",
+                              "kast",
+                              "headshotRate",
+                              "firstKills",
+                              "firstDeaths",
+                              "clutchWins",
+                              "clutchAttempts",
+                              "multikills"
+                            ],
+                            "properties": {
+                              "matches": {
+                                "type": "integer"
+                              },
+                              "rounds": {
+                                "type": "integer"
+                              },
+                              "roundWinRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "acs": {
+                                "type": "number"
+                              },
+                              "kd": {
+                                "type": "number"
+                              },
+                              "kills": {
+                                "type": "integer"
+                              },
+                              "deaths": {
+                                "type": "integer"
+                              },
+                              "assists": {
+                                "type": "integer"
+                              },
+                              "adr": {
+                                "type": "number"
+                              },
+                              "kast": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "headshotRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "firstKills": {
+                                "type": "integer"
+                              },
+                              "firstDeaths": {
+                                "type": "integer"
+                              },
+                              "clutchWins": {
+                                "type": "integer"
+                              },
+                              "clutchAttempts": {
+                                "type": "integer"
+                              },
+                              "multikills": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "kdPerMatch": {
+                      "type": "object",
+                      "required": [
+                        "mean",
+                        "median",
+                        "stdDev",
+                        "matches"
+                      ],
+                      "properties": {
+                        "mean": {
+                          "type": "number"
+                        },
+                        "median": {
+                          "type": "number"
+                        },
+                        "stdDev": {
+                          "type": "number"
+                        },
+                        "matches": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "matchId",
+                              "playedOn",
+                              "kd"
+                            ],
+                            "properties": {
+                              "matchId": {
+                                "type": "integer"
+                              },
+                              "playedOn": {
+                                "type": "string",
+                                "format": "date"
+                              },
+                              "kd": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}/matches": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "maxLength": 100
+            },
+            "in": "query",
+            "name": "cursor",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "in": "query",
+            "name": "limit",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "items",
+                    "nextCursor"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "matchId",
+                          "playedOn",
+                          "map",
+                          "team",
+                          "opponent",
+                          "teamScore",
+                          "opponentScore",
+                          "won",
+                          "agent",
+                          "acs",
+                          "kills",
+                          "deaths",
+                          "assists",
+                          "kd"
+                        ],
+                        "properties": {
+                          "matchId": {
+                            "type": "integer"
+                          },
+                          "playedOn": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "map": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "slug",
+                              "name"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "team": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "slug",
+                              "displayName"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "opponent": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "slug",
+                              "displayName"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "teamScore": {
+                            "type": "integer"
+                          },
+                          "opponentScore": {
+                            "type": "integer"
+                          },
+                          "won": {
+                            "type": "boolean"
+                          },
+                          "agent": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name",
+                              "role"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          },
+                          "acs": {
+                            "type": "number"
+                          },
+                          "kills": {
+                            "type": "integer"
+                          },
+                          "deaths": {
+                            "type": "integer"
+                          },
+                          "assists": {
+                            "type": "integer"
+                          },
+                          "kd": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}/agents": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "attack"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "side",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "agent",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "agent",
+                      "stats",
+                      "baselineAcs"
+                    ],
+                    "properties": {
+                      "agent": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "role"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "stats": {
+                        "type": "object",
+                        "required": [
+                          "matches",
+                          "rounds",
+                          "roundWinRate",
+                          "acs",
+                          "kd",
+                          "kills",
+                          "deaths",
+                          "assists",
+                          "adr",
+                          "kast",
+                          "headshotRate",
+                          "firstKills",
+                          "firstDeaths",
+                          "clutchWins",
+                          "clutchAttempts",
+                          "multikills"
+                        ],
+                        "properties": {
+                          "matches": {
+                            "type": "integer"
+                          },
+                          "rounds": {
+                            "type": "integer"
+                          },
+                          "roundWinRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "acs": {
+                            "type": "number"
+                          },
+                          "kd": {
+                            "type": "number"
+                          },
+                          "kills": {
+                            "type": "integer"
+                          },
+                          "deaths": {
+                            "type": "integer"
+                          },
+                          "assists": {
+                            "type": "integer"
+                          },
+                          "adr": {
+                            "type": "number"
+                          },
+                          "kast": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "headshotRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "firstKills": {
+                            "type": "integer"
+                          },
+                          "firstDeaths": {
+                            "type": "integer"
+                          },
+                          "clutchWins": {
+                            "type": "integer"
+                          },
+                          "clutchAttempts": {
+                            "type": "integer"
+                          },
+                          "multikills": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "baselineAcs": {
+                        "type": "number",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}/weapons": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "attack"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "side",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "agent",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "weapon",
+                      "kills",
+                      "firstKills",
+                      "roundsEquipped",
+                      "winRateEquipped",
+                      "headshotRateEquipped",
+                      "averageDistance",
+                      "killsByDistance",
+                      "baseline"
+                    ],
+                    "properties": {
+                      "weapon": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "category"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "kills": {
+                        "type": "integer"
+                      },
+                      "firstKills": {
+                        "type": "integer"
+                      },
+                      "roundsEquipped": {
+                        "type": "integer"
+                      },
+                      "winRateEquipped": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "headshotRateEquipped": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "averageDistance": {
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "killsByDistance": {
+                        "type": "object",
+                        "required": [
+                          "under10",
+                          "from10to20",
+                          "from20to30",
+                          "over30"
+                        ],
+                        "properties": {
+                          "under10": {
+                            "type": "integer"
+                          },
+                          "from10to20": {
+                            "type": "integer"
+                          },
+                          "from20to30": {
+                            "type": "integer"
+                          },
+                          "over30": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "baseline": {
+                        "type": "object",
+                        "required": [
+                          "winRateEquipped",
+                          "headshotRateEquipped",
+                          "averageDistance"
+                        ],
+                        "properties": {
+                          "winRateEquipped": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "headshotRateEquipped": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "averageDistance": {
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": [
+          "teams"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "team",
+                      "matches",
+                      "wins",
+                      "winRate"
+                    ],
+                    "properties": {
+                      "team": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "slug",
+                          "displayName"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "matches": {
+                        "type": "integer"
+                      },
+                      "wins": {
+                        "type": "integer"
+                      },
+                      "winRate": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{id}": {
+      "get": {
+        "tags": [
+          "teams"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "team",
+                    "matches",
+                    "wins",
+                    "winRate",
+                    "rosters",
+                    "maps"
+                  ],
+                  "properties": {
+                    "team": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "slug",
+                        "displayName"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "matches": {
+                      "type": "integer"
+                    },
+                    "wins": {
+                      "type": "integer"
+                    },
+                    "winRate": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "rosters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "tournament",
+                          "players"
+                        ],
+                        "properties": {
+                          "tournament": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "name"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "players": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "player",
+                                "matches"
+                              ],
+                              "properties": {
+                                "player": {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "gameName",
+                                    "tagLine"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "integer"
+                                    },
+                                    "gameName": {
+                                      "type": "string"
+                                    },
+                                    "tagLine": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "matches": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "maps": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "map",
+                          "matches",
+                          "wins",
+                          "attackRoundWinRate",
+                          "defenseRoundWinRate"
+                        ],
+                        "properties": {
+                          "map": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "slug",
+                              "name"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "matches": {
+                            "type": "integer"
+                          },
+                          "wins": {
+                            "type": "integer"
+                          },
+                          "attackRoundWinRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "defenseRoundWinRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "VALIDATION"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "UNAUTHORIZED"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "FORBIDDEN"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "NOT_FOUND"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "CONFLICT"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "INTERNAL"
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weapons/stats": {
+      "get": {
+        "tags": [
+          "stats"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "tournament",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "stage",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "attack"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "side",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "team",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "player",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "agent",
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "weapon",
+                      "kills",
+                      "firstKills",
+                      "roundsEquipped",
+                      "killsPerRoundEquipped",
+                      "winRateEquipped",
+                      "headshotRateEquipped",
+                      "averageDistance",
+                      "costPerKill",
+                      "killsByDistance"
+                    ],
+                    "properties": {
+                      "weapon": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "category",
+                          "cost"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "cost": {
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "kills": {
+                        "type": "integer"
+                      },
+                      "firstKills": {
+                        "type": "integer"
+                      },
+                      "roundsEquipped": {
+                        "type": "integer"
+                      },
+                      "killsPerRoundEquipped": {
+                        "type": "number"
+                      },
+                      "winRateEquipped": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "headshotRateEquipped": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "averageDistance": {
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "costPerKill": {
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "killsByDistance": {
+                        "type": "object",
+                        "required": [
+                          "under10",
+                          "from10to20",
+                          "from20to30",
+                          "over30"
+                        ],
+                        "properties": {
+                          "under10": {
+                            "type": "integer"
+                          },
+                          "from10to20": {
+                            "type": "integer"
+                          },
+                          "from20to30": {
+                            "type": "integer"
+                          },
+                          "over30": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/stats": {
+      "get": {
+        "tags": [
+          "stats"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "map",
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "agent",
+                      "picks",
+                      "pickRate",
+                      "rounds",
+                      "winRate",
+                      "acs",
+                      "kd",
+                      "acsAdjusted",
+                      "kdAdjusted"
+                    ],
+                    "properties": {
+                      "agent": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "role"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "picks": {
+                        "type": "integer"
+                      },
+                      "pickRate": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "rounds": {
+                        "type": "integer"
+                      },
+                      "winRate": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "acs": {
+                        "type": "number"
+                      },
+                      "kd": {
+                        "type": "number"
+                      },
+                      "acsAdjusted": {
+                        "type": "number"
+                      },
+                      "kdAdjusted": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -20,6 +20,7 @@ import { playerRoutes } from './modules/players/routes.js'
 import { statsRoutes } from './modules/stats/routes.js'
 import { teamRoutes } from './modules/teams/routes.js'
 import { authPlugin } from './plugins/auth.js'
+import { httpCachePlugin } from './plugins/http-cache.js'
 import { AppError, codeForStatus, errorBody } from './shared/errors.js'
 
 declare module 'fastify' {
@@ -50,6 +51,7 @@ export async function buildApp({ config, db }: AppOptions): Promise<App> {
 
   await app.register(cors, { origin: config.CORS_ORIGIN, credentials: true })
   await app.register(cookie, { secret: config.COOKIE_SECRET })
+  await app.register(httpCachePlugin)
   await app.register(swagger, {
     openapi: {
       info: { title: 'Valorant Analytics API', version: '0.1.0' },

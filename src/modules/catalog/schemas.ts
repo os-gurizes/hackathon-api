@@ -1,6 +1,6 @@
 import { Type, type Static } from 'typebox'
 
-import { Nullable, TeamRef } from '../../shared/schema.js'
+import { Literals, Nullable, TeamRef } from '../../shared/schema.js'
 
 export const Stage = Type.Object({
   id: Type.Integer(),
@@ -38,7 +38,7 @@ export const MapSummary = Type.Object({
   slug: Type.String(),
   name: Type.String(),
   matches: Type.Integer(),
-  silhouetteQuality: Nullable(Type.Union([Type.Literal('ok'), Type.Literal('low')])),
+  silhouetteQuality: Nullable(Literals(['ok', 'low'])),
 })
 
 export const Point = Type.Object({ x: Type.Number(), y: Type.Number() })
@@ -49,7 +49,7 @@ export const MapDetail = Type.Object({
   name: Type.String(),
   viewBox: Type.Array(Type.Number(), { minItems: 4, maxItems: 4 }),
   silhouette: Nullable(Type.String()),
-  silhouetteQuality: Nullable(Type.Union([Type.Literal('ok'), Type.Literal('low')])),
+  silhouetteQuality: Nullable(Literals(['ok', 'low'])),
   sites: Type.Array(Type.Object({ site: Type.String(), at: Point, plants: Type.Integer() })),
   zones: Type.Array(
     Type.Object({

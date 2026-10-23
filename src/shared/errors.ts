@@ -1,5 +1,7 @@
 import { Type, type Static } from 'typebox'
 
+import { Literals } from './schema.js'
+
 export type ErrorCode = 'VALIDATION' | 'UNAUTHORIZED' | 'FORBIDDEN' | 'NOT_FOUND' | 'CONFLICT' | 'INTERNAL'
 
 const STATUS: Record<ErrorCode, number> = {
@@ -41,14 +43,7 @@ export const unauthorized = (): AppError => new AppError('UNAUTHORIZED', 'Login 
 
 export const ErrorResponse = Type.Object({
   error: Type.Object({
-    code: Type.Union([
-      Type.Literal('VALIDATION'),
-      Type.Literal('UNAUTHORIZED'),
-      Type.Literal('FORBIDDEN'),
-      Type.Literal('NOT_FOUND'),
-      Type.Literal('CONFLICT'),
-      Type.Literal('INTERNAL'),
-    ]),
+    code: Literals(['VALIDATION', 'UNAUTHORIZED', 'FORBIDDEN', 'NOT_FOUND', 'CONFLICT', 'INTERNAL']),
     message: Type.String(),
   }),
 })

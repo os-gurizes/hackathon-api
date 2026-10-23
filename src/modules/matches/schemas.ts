@@ -3,6 +3,8 @@ import { Type, type Static } from 'typebox'
 import { Filters } from '../../shared/filters.js'
 import {
   AgentRef,
+  Literal,
+  Literals,
   MapRef,
   Nullable,
   PageQuery,
@@ -66,13 +68,7 @@ export const MatchDetail = Type.Object({
   scoreboard: Type.Array(ScoreboardLine),
 })
 
-const BuyType = Type.Union([
-  Type.Literal('pistol'),
-  Type.Literal('eco'),
-  Type.Literal('semi_eco'),
-  Type.Literal('half_buy'),
-  Type.Literal('full_buy'),
-])
+const BuyType = Literals(['pistol', 'eco', 'semi_eco', 'half_buy', 'full_buy'])
 
 export const RoundSummary = Type.Object({
   number: Type.Integer(),
@@ -87,7 +83,7 @@ export const RoundSummary = Type.Object({
   winProbability: Type.Array(
     Type.Object({
       tMs: Type.Integer(),
-      event: Type.Union([Type.Literal('start'), Type.Literal('kill'), Type.Literal('plant')]),
+      event: Literals(['start', 'kill', 'plant']),
       attack: Rate,
     }),
   ),
@@ -105,11 +101,11 @@ const Position = Type.Object({
 
 export const ReplayEvent = Type.Union([
   Type.Object({
-    type: Type.Literal('kill'),
+    type: Literal('kill'),
     tMs: Type.Integer(),
     killerId: Nullable(Type.Integer()),
     victimId: Type.Integer(),
-    kind: Type.Union([Type.Literal('enemy'), Type.Literal('team'), Type.Literal('self')]),
+    kind: Literals(['enemy', 'team', 'self']),
     damageType: Type.String(),
     weaponId: Nullable(Type.Integer()),
     abilitySlot: Nullable(Type.String()),
@@ -121,7 +117,7 @@ export const ReplayEvent = Type.Union([
     positions: Type.Array(Position),
   }),
   Type.Object({
-    type: Type.Union([Type.Literal('plant'), Type.Literal('defuse')]),
+    type: Literals(['plant', 'defuse']),
     tMs: Type.Integer(),
     playerId: Nullable(Type.Integer()),
     site: Nullable(Type.String()),

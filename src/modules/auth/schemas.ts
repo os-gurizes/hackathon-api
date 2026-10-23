@@ -1,6 +1,8 @@
 import { Type, type Static } from 'typebox'
 
-export const RoleSchema = Type.Union([Type.Literal('player'), Type.Literal('coach'), Type.Literal('admin')])
+import { Literals } from '../../shared/schema.js'
+
+export const RoleSchema = Literals(['player', 'coach', 'admin'])
 
 export const LoginBody = Type.Object({
   email: Type.String({ format: 'email', maxLength: 200 }),
